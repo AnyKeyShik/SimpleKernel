@@ -29,6 +29,6 @@ old-install:
 
 install:
 	cp bin/kernel /boot/kernel-01
-	echo -e "menuentry 'kernel 01' {\n\tset root='hd0,msdos1'\n\tmultiboot /boot/kernel-01 ro\n}" >> /boot/grub/grub.cfg
+	echo -e "menuentry 'kernel 01' {\n\tset root='hd0,gpt2'\n\tmultiboot /boot/kernel-01 ro\n}" >> /boot/grub/grub.cfg
 
 .PHONY: old-install install run first clean
