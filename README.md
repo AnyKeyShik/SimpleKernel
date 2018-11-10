@@ -32,9 +32,9 @@ Features
 * Bash interpreter
 * GUI
 
-# Make and run:
-* `git clone https://github.com/AnyKeyShik/SimpleKernel.git`
-* `make`
-* `make run`
+# Running:
+If you want to running in `qemu` you can just run `make run`
 
-If you don't like objects files you can run `make clean`
+If you want to add this system to GRUB:
+* If you have GRUB older than 2.0 run `make old-install` as root
+* If your GRUB is 2.0 or higher run `make install` as root
