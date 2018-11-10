@@ -1,5 +1,6 @@
 # Simple kernel 
 This is my first attempt to write something great (again :D)
+
 I want to learn how does OS work and this is main reason why I've started this project.
 
 At this moment system is working in 32-bit protected mode only
@@ -35,4 +36,5 @@ Features
 * `git clone https://github.com/AnyKeyShik/SimpleKernel.git`
 * `make`
 * `make run`
+
 If you don't like objects files you can run `make clean`
