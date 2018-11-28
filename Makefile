@@ -1,15 +1,18 @@
-OBJECTS := obj/keyboard_map_c.o obj/kernel_c.o obj/kernel_asm.o
+OBJECTS := obj/includes/keyboard_map_c.o obj/includes/consts_c.o obj/includes/idt_c.o obj/includes/keyboard_c.o obj/includes/screen_c.o obj/kernel_c.o obj/kernel_asm.o
 
 first: bin/kernel
 
 obj:
-	mkdir -p obj
+	mkdir -p obj/includes
 
 bin:
 	mkdir -p bin
 
 obj/%_asm.o: src/%.asm obj
 	nasm -f elf32 $< -o $@
+
+obj/includes/%_c.o: src/includes/%.c obj
+	gcc -fno-stack-protector -m32 -c $< -o $@
 
 obj/%_c.o: src/%.c obj
 	gcc -fno-stack-protector -m32 -c $< -o $@
