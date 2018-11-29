@@ -10,6 +10,7 @@ struct IDT_entry {
 };
 
 struct IDT_entry IDT[IDT_SIZE];
+
 extern void keyboard_handler(void);
 extern void load_idt(unsigned long *idt_ptr);
 extern void write_port(unsigned short port, unsigned char data);

@@ -31,11 +31,7 @@ void keyboard_handler_main(void)
 			return;
 		}
 
-		//vidptr[*current_loc++] = keyboard_map[(unsigned char) keycode];
-		//vidptr[*current_loc++] = 0x07;
-        
         char input_str = keyboard_map[(unsigned char) keycode];
-
         print_symbol(input_str);
 	}
 }
