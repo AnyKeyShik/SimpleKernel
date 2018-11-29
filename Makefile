@@ -26,11 +26,11 @@ run: bin/kernel
 clean:
 	rm -rf bin obj
 
-old-install:
+old-install: bin/kernel
 	cp bin/kernel /boot/kernel-01
 	echo -e "title myKernel\n\troot (hd0,0)\n\tkernel /boot/kernel-01 ro" >> /boot/grub/grub.cfg
 
-install:
+install: bin/kernel
 	cp bin/kernel /boot/kernel-01
 	echo -e "menuentry 'kernel 01' {\n\tset root='hd0,gpt2'\n\tmultiboot /boot/kernel-01 ro\n}" >> /boot/grub/grub.cfg
 
