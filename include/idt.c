@@ -1,5 +1,5 @@
-#include "consts.h"
-#include "keyboard_map.h"
+#include "../include/consts.h"
+#include "../include/keyboard_map.h"
 
 struct IDT_entry {
     unsigned short int offset_lowerbits;

@@ -35,8 +35,4 @@ Features
 * GUI
 
 # Running:
-If you want to running in `qemu` you can just run `make run`
-
-If you want to add this system to GRUB (at this moment it did not recomended because system boot works only from BIOS and adding was released with not-effective method):
-* If you have GRUB older than 2.0 run `make old-install` as root
-* If your GRUB is 2.0 or higher run `make install` as root
+You can running this project with `qemu`. For this you can just run `make run`

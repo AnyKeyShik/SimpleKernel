@@ -1,7 +1,7 @@
-#include "includes/keyboard_map.h"
-#include "includes/idt.h"
-#include "includes/keyboard.h"
-#include "includes/screen.h"
+#include "../include/keyboard_map.h"
+#include "../include/idt.h"
+#include "../include/keyboard.h"
+#include "../include/screen.h"
 
 void kmain(void)
 {
