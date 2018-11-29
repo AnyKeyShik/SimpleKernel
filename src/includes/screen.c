@@ -23,6 +23,21 @@ void print_newline(void)
 	current_loc = current_loc + (line_size - current_loc % (line_size));
 }
 
+void print_delete_symbol()
+{
+    vidptr[--current_loc] = 0x07;
+    vidptr[--current_loc] = ' ';
+}
+
+void print_tab() 
+{
+    unsigned int i = 0;
+    while(i < 4) {
+        print_symbol(' ');
+        i++;
+    }
+}
+
 void clear_screen(void)
 {
 	unsigned int i = 0;

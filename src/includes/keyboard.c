@@ -30,6 +30,14 @@ void keyboard_handler_main(void)
 			print_newline();
 			return;
 		}
+        if(keycode == BACKSPACE_KEY_CODE) {
+            print_delete_symbol();
+            return;
+        }
+        if(keycode == TAB_KEY_CODE) {
+            print_tab();
+            return;
+        }
 
         char input_str = keyboard_map[(unsigned char) keycode];
         print_symbol(input_str);
