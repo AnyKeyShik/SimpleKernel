@@ -2,57 +2,63 @@
 # Makefile
 # Simple kernel project
 #
-# Created by AnyKeyShik Rarity on 2018-29-11
+# Created by AnyKeyShik Rarity 2018-30-11
 # Copyright (c) 2018 AnyKeyShik Lab Inc. All rights reserved.
 #
 
+# CC
+CC := gcc
+NASM := nasm
+LNK := ld
 
-# Objects. TODO: rewrite it
-OBJECTS := obj/include/keyboard_map_c.o obj/include/consts_c.o obj/include/idt_c.o obj/include/keyboard_c.o obj/include/screen_c.o obj/kernel_c.o obj/kernel_asm.o
-
-# Source dirs
+# Folders
 SRCDIR := src
-INCDIR := include
 LNKDIR := lnk
+BUILDDIR := build
+TARGETDIR := bin
 
-#TODO: Add docs and it autogenerate
-# Build dirs
-OBJDIR := obj
-BINDIR := bin
+# Targets
+EXECUTABLE := kernel
+TARGET := $(TARGETDIR)/$(EXECUTABLE)
 
-# Output binary name
-KERNEL_NAME := kernel
+# Code lists
+SRCTEXT := c
+ASMTEXT := asm
+LNKTEXT := ld
+SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCTEXT))
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCTEXT)=_c.o))
+ASM_SOURCES := $(shell find $(SRCDIR) -type f -name *.$(ASMTEXT))
+ASM_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(ASM_SOURCES:.$(ASMTEXT)=_asm.o))
 
-first: $(BINDIR)/$(KERNEL_NAME)
+# Flags
+CFLAGS := -fno-stack-protector -m32 -c -o
+NFLAGS := -f elf32
+LFLAGS := -m elf_i386 -T
 
-$(OBJDIR):
-	mkdir -p $(OBJDIR)/include
+first: $(TARGETDIR)/$(EXECUTABLE)
 
-$(BINDIR):
-	mkdir -p $(BINDIR)
+$(BUILDDIR)/%_c.o: $(SRCDIR)/%.$(SRCTEXT)
+	@mkdir -p $(BUILDDIR)
+	@echo "Compiling c parts of $(EXECUTABLE)..."
+	@echo -e "\tCompiling $<..."; $(CC) $(CFLAGS) $@ $<
 
-# Compile asm part
-$(OBJDIR)/%_asm.o: $(SRCDIR)/%.asm $(OBJDIR)
-	nasm -f elf32 $< -o $@
+$(BUILDDIR)/%_asm.o: $(SRCDIR)/%.$(ASMTEXT)
+	@echo "Compiling asm parts of $(EXECUTABLE)..."
+	@echo -e "\tCompiling $<..."; $(NASM) $(NFLAGS) $< -o $@
 
-# Compile *.c part of header
-$(OBJDIR)/include/%_c.o: $(INCDIR)/%.c $(OBJDIR)
-	gcc -fno-stack-protector -m32 -c $< -o $@
+$(TARGET): $(OBJECTS) $(ASM_OBJECTS)
+	@mkdir -p $(TARGETDIR)
+	@echo "Linking..."
+	@echo -e "\tLinking $(TARGET)"; $(LNK) $(LFLAGS) $(LNKDIR)/link.$(LNKTEXT) -o $@ $(OBJECTS) $(ASM_OBJECTS)
 
-# Compile main file
-$(OBJDIR)/%_c.o: $(SRCDIR)/%.c $(OBJDIR)
-	gcc -fno-stack-protector -m32 -c $< -o $@
+distclean:
+	@echo "Cleaning objects..."
+	@rm -rf build
 
-# Link all files and create binary
-$(BINDIR)/$(KERNEL_NAME): $(LNKDIR)/link.ld $(OBJECTS) $(BINDIR)
-	ld -m elf_i386 -T $< -o $@ $(OBJECTS)
-
-# Build and run kernel
-run: $(BINDIR)/$(KERNEL_NAME)
-	qemu-system-x86_64 -kernel $<
-
-# Clean all build directories (objects and binaries)
 clean:
-	rm -rf $(OBJDIR) $(BINDIR)
+	@echo "Cleaning all..."
+	@rm -rf build bin
 
-.PHONY: run first clean
+run: $(TARGETDIR)/$(EXECUTABLE)
+	@qemu-system-x86_64 -kernel $<
+
