@@ -14,6 +14,7 @@ LNK := ld
 # Folders
 SRCDIR := src
 LNKDIR := lnk
+INCLUDEDIR := include
 BUILDDIR := build
 TARGETDIR := bin
 
@@ -31,7 +32,7 @@ ASM_SOURCES := $(shell find $(SRCDIR) -type f -name *.$(ASMTEXT))
 ASM_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(ASM_SOURCES:.$(ASMTEXT)=_asm.o))
 
 # Flags
-CFLAGS := -fno-stack-protector -m32 -c -o
+CFLAGS := -fno-stack-protector -m32 -c -I $(INCLUDEDIR) -o
 NFLAGS := -f elf32
 LFLAGS := -m elf_i386 -T
 

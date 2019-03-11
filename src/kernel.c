@@ -1,11 +1,11 @@
-#include "../include/keyboard_map.h"
-#include "../include/idt.h"
-#include "../include/keyboard.h"
-#include "../include/screen.h"
+#include "keyboard_map.h"
+#include "idt.h"
+#include "keyboard.h"
+#include "screen.h"
 
 void kmain(void)
 {
-	const char *str = "Kernel v0.1";
+	const char *str = "Kernel v0.2";
 	clear_screen();
 	print_string(str);
 	print_newline();

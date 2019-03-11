@@ -1,4 +1,4 @@
-#include "../include/keyboard.h"
+#include "keyboard.h"
 
 extern void write_port(unsigned short port, unsigned char data);
 extern char read_port(unsigned short port);
