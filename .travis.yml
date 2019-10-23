@@ -1,3 +1,8 @@
+os: linux
+sudo: required
+
+before_install: sudo apt-get install nasm
+
 language: c
 script: make
 compiler: gcc
