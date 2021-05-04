@@ -13,6 +13,6 @@
 #define INTERRUPT_GATE 0x8e
 #define KERNEL_CODE_SEGMENT_OFFSET 0x08
 
-char *vidptr;
+extern char *vidptr;
 
 #endif
