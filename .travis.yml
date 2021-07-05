@@ -1,7 +1,7 @@
 os: linux
 sudo: required
 
-before_install: sudo apt-get install nasm
+before_install: sudo apt-get install nasm xorriso
 
 language: c
 script: make

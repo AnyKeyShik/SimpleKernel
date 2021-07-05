@@ -1,30 +1,35 @@
 #
 # Makefile
-# Simple kernel project
+# Simple OS project
 #
-# Created by AnyKeyShik Rarity 2018-30-11
-# Copyright (c) 2018 AnyKeyShik Lab Inc. All rights reserved.
+# Created by AnyKeyShik Rarity 2021-06-07
+# Copyright (c) 2021 AnyKeyShik Lab Inc. All rights reserved.
 #
+
+arch ?= x86
 
 # CC
 CC := gcc
-NASM := nasm
+ASM := nasm
 LNK := ld
 
 # Folders
-SRCDIR := src
+SRCDIR := src/arch/x86
+INCLUDEDIR := include/arch/x86
 LNKDIR := lnk
-INCLUDEDIR := include
+WORKERSDIR := workers/arch/x86
 BUILDDIR := build
 TARGETDIR := bin
 
 # Targets
 EXECUTABLE := kernel
+ISOIM := kernel.iso
 TARGET := $(TARGETDIR)/$(EXECUTABLE)
+ISO := $(TARGETDIR)/$(ISOIM)
 
 # Code lists
 SRCTEXT := c
-ASMTEXT := asm
+ASMTEXT := S
 LNKTEXT := ld
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCTEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCTEXT)=_c.o))
@@ -33,10 +38,12 @@ ASM_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(ASM_SOURCES:.$(ASMTEXT)=_a
 
 # Flags
 CFLAGS := -fno-stack-protector -m32 -c -I $(INCLUDEDIR) -o
-NFLAGS := -f elf32
-LFLAGS := -m elf_i386 -T
+NFLAGS := -felf
+LFLAGS := -m elf_i386 --nmagic -T
 
-first: $(TARGETDIR)/$(EXECUTABLE)
+.PHONY: first distclean clean iso run
+
+first: iso
 
 $(BUILDDIR)/%_c.o: $(SRCDIR)/%.$(SRCTEXT)
 	@mkdir -p $(BUILDDIR)
@@ -44,8 +51,9 @@ $(BUILDDIR)/%_c.o: $(SRCDIR)/%.$(SRCTEXT)
 	@echo -e "\tCompiling $<..."; $(CC) $(CFLAGS) $@ $<
 
 $(BUILDDIR)/%_asm.o: $(SRCDIR)/%.$(ASMTEXT)
+	@mkdir -p $(BUILDDIR)
 	@echo "Compiling asm parts of $(EXECUTABLE)..."
-	@echo -e "\tCompiling $<..."; $(NASM) $(NFLAGS) $< -o $@
+	@echo -e "\tCompiling $<..."; $(ASM) $(NFLAGS) $< -o $@
 
 $(TARGET): $(OBJECTS) $(ASM_OBJECTS)
 	@mkdir -p $(TARGETDIR)
@@ -60,19 +68,12 @@ clean:
 	@echo "Cleaning all..."
 	@rm -rf build bin
 
-run: $(TARGETDIR)/$(EXECUTABLE)
-	@qemu-system-x86_64 -kernel $<
-iso: $(TARGETDIR)/$(EXECUTABLE)
-	mkdir iso
-	mkdir iso/boot
-	mkdir iso/boot/grub
-	cp bin/kernel iso/boot/
-	echo 'set timeout=0' > iso/boot/grub/grub.cfg
-	echo 'set default=0' >> iso/boot/grub/grub.cfg
-	echo '' >> iso/boot/grub/grub.cfg
-	echo 'menuentry "simplekernel" {' >> iso/boot/grub/grub.cfg
-	echo '  multiboot /boot/kernel' >> iso/boot/grub/grub.cfg
-	echo '	boot'	>> iso/boot/grub/grub.cfg
-	echo '}'	>> iso/boot/grub/grub.cfg
-	grub-mkrescue --output=bin/kernel.iso iso
-	rm -r iso
+iso $(ISO): $(TARGET)
+	@mkdir -p iso/boot/grub
+	@cp bin/kernel iso/boot/
+	@cp $(WORKERSDIR)/grub.cfg iso/boot/grub/
+	grub-mkrescue -d /usr/lib/grub/i386-pc/ -o bin/kernel.iso iso
+	@rm -r iso
+
+run: $(ISO)
+	@qemu-system-x86_64 -cdrom $<

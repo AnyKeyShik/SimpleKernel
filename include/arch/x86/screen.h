@@ -6,6 +6,7 @@
 extern unsigned int current_loc;
 
 void print_string(const char *string);
+void print_error(const char *string);
 void print_symbol(char symbol);
 void print_newline(void);
 void print_delete_symbol(void);
