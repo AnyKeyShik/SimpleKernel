@@ -11,20 +11,16 @@
 </a>
 
 This is my first attempt to write something great (again :D)
-
 I want to learn how does OS work and this is main reason why I've started this project.
-
 At this moment system is working in 32-bit protected mode only
 
 ## When I started I adhered to the following principles:
----
 * I don't want to write my own bootloader
 * In start I support legacy only (like BIOS, non-gaming[3-buttons] mouse, 128-keybaord, etc)
 * (maybe smth else)
 
 
 ## Features
-===
 | Module                            | Progress      |
 |-----------------------------------|---------------|
 | Boot in BIOS                      | **DONE**      |
