@@ -3,7 +3,7 @@
 
 #include "consts.h"
 
-unsigned int current_loc;
+extern unsigned int current_loc;
 
 void print_string(const char *string);
 void print_symbol(char symbol);

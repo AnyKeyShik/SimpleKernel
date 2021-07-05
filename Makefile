@@ -62,4 +62,17 @@ clean:
 
 run: $(TARGETDIR)/$(EXECUTABLE)
 	@qemu-system-x86_64 -kernel $<
-
+iso: $(TARGETDIR)/$(EXECUTABLE)
+	mkdir iso
+	mkdir iso/boot
+	mkdir iso/boot/grub
+	cp bin/kernel iso/boot/
+	echo 'set timeout=0' > iso/boot/grub/grub.cfg
+	echo 'set default=0' >> iso/boot/grub/grub.cfg
+	echo '' >> iso/boot/grub/grub.cfg
+	echo 'menuentry "simplekernel" {' >> iso/boot/grub/grub.cfg
+	echo '  multiboot /boot/kernel' >> iso/boot/grub/grub.cfg
+	echo '	boot'	>> iso/boot/grub/grub.cfg
+	echo '}'	>> iso/boot/grub/grub.cfg
+	grub-mkrescue --output=bin/kernel.iso iso
+	rm -r iso
