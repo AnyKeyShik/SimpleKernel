@@ -14,6 +14,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: configure
-      run: ./configure
+      run: sudo apt-get install nasm xorriso
     - name: make
       run: make iso
