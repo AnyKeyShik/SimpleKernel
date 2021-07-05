@@ -1,8 +1,0 @@
-language: c
-
-install:
-  - sudo apt-get update
-  - sudo apt-get install nasm xorriso qemu-kvm qemu virt-manager virt-viewer libvirt-bin
-
-script:
-  - make run
