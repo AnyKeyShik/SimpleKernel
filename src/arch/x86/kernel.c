@@ -21,26 +21,26 @@ check_long_mode(void);
 void 
 kmain(void)
 {
-	const char *str = "Kernel v0.1";
+    const char *str = "Kernel v0.1";
 	
     clear_screen();
 
     print_string(str);
-	print_newline();
-	print_newline();
+    print_newline();
+    print_newline();
 
-	load_gdt();
-	print_string("GDT loaded");
-	print_newline();
+    load_gdt();
+    print_string("GDT loaded");
+    print_newline();
 
-	idt_init();
-	print_string("IDT loaded");
-	print_newline();
+    idt_init();
+    print_string("IDT loaded");
+    print_newline();
 	
     keyboard_init();
-	print_string("Keyboard initialized");
-	print_newline();
-	print_newline();
+    print_string("Keyboard initialized");
+    print_newline();
+    print_newline();
 	
     while(1);
 }

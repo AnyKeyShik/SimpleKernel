@@ -26,10 +26,10 @@ void keyboard_handler_main(void)
             return;
         }
 
-		if(keycode == ENTER_KEY_CODE) {
-			print_newline();
-			return;
-		}
+        if(keycode == ENTER_KEY_CODE) {
+            print_newline();
+            return;
+        }
         if(keycode == BACKSPACE_KEY_CODE) {
             print_delete_symbol();
             return;
