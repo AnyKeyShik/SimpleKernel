@@ -9,6 +9,7 @@
 <a href="https://github.com/AnyKeyShik/SimpleKernel/network">
 <img src ="https://img.shields.io/github/forks/AnyKeyShik/SimpleKernel.svg" />
 </a>
+[![Build Status](https://travis-ci.com/AnyKeyShik/SimpleKernel.svg?branch=master)](https://travis-ci.com/AnyKeyShik/SimpleKernel)
 
 This is my first attempt to write something great (again :D)
 I want to learn how does OS work and this is main reason why I've started this project.
