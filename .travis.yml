@@ -1,5 +1,5 @@
 os: linux
-install: sudo apt-get install nasm xorriso
+install: sudo apt-get install nasm xorriso qemu-kvm qemu
 
 language: c
 
