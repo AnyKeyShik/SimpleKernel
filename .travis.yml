@@ -1,5 +1,5 @@
 os: linux
-install: sudo apt-get install nasm xorriso qemu-kvm qemu
+install: sudo apt-get install nasm xorriso
 
 language: c
 
@@ -7,4 +7,3 @@ sudo: false
 
 script:
   - make iso
-  - make run
