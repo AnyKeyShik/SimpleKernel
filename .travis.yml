@@ -1,5 +1,5 @@
 os: linux
-install: nasm xorriso
+install: sudo apt-get install nasm xorriso
 
 language: c
 
