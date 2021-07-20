@@ -1,0 +1,10 @@
+os: linux
+install: nasm xorriso
+
+language: c
+
+sudo: false
+
+script:
+  - make iso
+  - make run
