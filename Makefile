@@ -29,7 +29,7 @@ ISO := $(TARGETDIR)/$(ISOIM)
 
 # Code lists
 SRCTEXT := c
-ASMTEXT := S
+ASMTEXT := asm
 LNKTEXT := ld
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCTEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCTEXT)=_c.o))
@@ -41,9 +41,11 @@ CFLAGS := -fno-stack-protector -m32 -c -I $(INCLUDEDIR) -o
 NFLAGS := -felf
 LFLAGS := -m elf_i386 --nmagic -T
 
-.PHONY: first distclean clean iso run
+.PHONY: first distclean clean iso run all
 
 first: iso
+
+all: run
 
 $(BUILDDIR)/%_c.o: $(SRCDIR)/%.$(SRCTEXT)
 	@mkdir -p $(BUILDDIR)
