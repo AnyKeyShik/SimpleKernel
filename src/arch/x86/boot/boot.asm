@@ -18,7 +18,6 @@ start:
     cli         ; block interrupts
     mov esp, stack_bottom
     call kmain
-    hlt         ; halt the CPU
 
 exit:
     hlt
