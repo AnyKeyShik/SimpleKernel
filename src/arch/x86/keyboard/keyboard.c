@@ -12,12 +12,14 @@ extern char read_port(unsigned short port);
 
 extern unsigned char keyboard_map[128];
 
-void keyboard_init(void) {
+void
+keyboard_init(void) {
     // 0xFD is 11111101 - enables only IRQ1 (keyboard)
     write_port(0x21, 0xFD);
 }
 
-void keyboard_handler_main(void) {
+void
+keyboard_handler_main(void) {
     unsigned char status;
     char keycode;
 

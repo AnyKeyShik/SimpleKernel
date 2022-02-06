@@ -22,7 +22,9 @@ extern void load_idt(unsigned long *idt_ptr);
 
 extern void write_port(unsigned short port, unsigned char data);
 
-void idt_init(void) {
+void
+idt_init(void)
+{
     unsigned long keyboard_address;
     unsigned long idt_address;
     unsigned long idt_ptr[2];
