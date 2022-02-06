@@ -1,28 +1,18 @@
-#include "keyboard_map.h"
-#include "idt.h"
-#include "keyboard.h"
-#include "screen.h"
+// Copyright (c) 2022. AnyKeyShik Rarity
+//
+// nikitav59@gmail.com
+//
+// https://t.me/AnyKeyShik
 
-extern void 
-load_gdt(void);
+#include "keyboard/idt.h"
+#include "keyboard/keyboard.h"
+#include "screen/screen.h"
 
-extern void
-exit(void);
+extern void load_gdt(void);
 
-extern int
-check_multiboot(void);
-
-extern int
-check_cpuid(void);
-
-extern int
-check_long_mode(void);
-
-void 
-kmain(void)
-{
+void kmain(void) {
     const char *str = "Kernel v0.1";
-	
+
     clear_screen();
 
     print_string(str);
@@ -36,11 +26,11 @@ kmain(void)
     idt_init();
     print_string("IDT loaded");
     print_newline();
-	
+
     keyboard_init();
     print_string("Keyboard initialized");
     print_newline();
     print_newline();
-	
-    while(1);
+
+    while (1);
 }

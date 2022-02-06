@@ -1,3 +1,9 @@
+; Copyright (c) 2022. AnyKeyShik Rarity
+;
+; nikitav59@gmail.com
+;
+; https://t.me/AnyKeyShik
+
 global load_gdt
 
 gdt:

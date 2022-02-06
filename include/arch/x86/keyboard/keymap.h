@@ -1,3 +1,9 @@
+// Copyright (c) 2022. AnyKeyShik Rarity
+//
+// nikitav59@gmail.com
+//
+// https://t.me/AnyKeyShik
+
 #ifndef KEYMAP_H
 #define KEYMAP_H
 

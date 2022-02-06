@@ -1,4 +1,8 @@
-; Interrupt processing
+; Copyright (c) 2022. AnyKeyShik Rarity
+;
+; nikitav59@gmail.com
+;
+; https://t.me/AnyKeyShik
 
 bits 32
 
@@ -14,6 +18,7 @@ section .text
 ; Load Interrupt Descriptor Table (cdecl)
 load_idt:
     mov edx, [esp + 4]
+
     lidt [edx]
     sti             ; turn on interrupts
     ret

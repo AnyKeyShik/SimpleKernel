@@ -1,11 +1,36 @@
+# Copyright (c) 2022. AnyKeyShik Rarity
 #
-# Makefile
-# Simple OS project
+# nikitav59@gmail.com
 #
-# Created by AnyKeyShik Rarity 2021-06-07
-# Copyright (c) 2021 AnyKeyShik Lab Inc. All rights reserved.
-#
+# https://t.me/AnyKeyShik
 
+# Run 'make V=1' to turn on verbose commands, or 'make V=0' to turn them off.
+ifeq ($(V),1)
+override V =
+endif
+ifeq ($(V),0)
+override V = @
+endif
+
+# try to infer the correct QEMU
+ifndef QEMU
+QEMU := $(shell if which qemu > /dev/null 2>&1; \
+	then echo qemu; exit; \
+	elif which qemu-system-i386 > /dev/null 2>&1; \
+	then echo qemu-system-i386; exit; \
+	else \
+	qemu=/Applications/Q.app/Contents/MacOS/i386-softmmu.app/Contents/MacOS/i386-softmmu; \
+	if test -x $$qemu; then echo $$qemu; exit; fi; fi; \
+	echo "***" 1>&2; \
+	echo "*** Error: Couldn't find a working QEMU executable." 1>&2; \
+	echo "*** Is the directory containing the qemu binary in your PATH" 1>&2; \
+	echo "*** or have you tried setting the QEMU variable in conf/env.mk?" 1>&2; \
+	echo "***" 1>&2; exit 1)
+endif
+
+-include conf/env.mk
+
+# Architecture defines
 arch ?= x86
 
 # CC
@@ -14,10 +39,10 @@ ASM := nasm
 LNK := ld
 
 # Folders
-SRCDIR := src/arch/x86
-INCLUDEDIR := include/arch/x86
+SRCDIR := src/arch/$(arch)
+INCLUDEDIR := include/arch/$(arch)
 LNKDIR := lnk
-WORKERSDIR := workers/arch/x86
+WORKERSDIR := workers/arch/$(arch)
 BUILDDIR := build
 TARGETDIR := bin
 
@@ -31,15 +56,17 @@ ISO := $(TARGETDIR)/$(ISOIM)
 SRCTEXT := c
 ASMTEXT := asm
 LNKTEXT := ld
-SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCTEXT))
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCTEXT)=_c.o))
-ASM_SOURCES := $(shell find $(SRCDIR) -type f -name *.$(ASMTEXT))
-ASM_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(ASM_SOURCES:.$(ASMTEXT)=_asm.o))
 
 # Flags
-CFLAGS := -fno-stack-protector -m32 -c -I $(INCLUDEDIR) -o
+CFLAGS := -fno-stack-protector -nostdinc -O0 -m32 -c -I $(INCLUDEDIR) -o
 NFLAGS := -felf
 LFLAGS := -m elf_i386 --nmagic -T
+QEMUOPTS := -serial mon:stdio -cdrom
+
+ifdef DEBUG
+GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
+override QEMUOPTS = -serial mon:stdio -gdb tcp::$(GDBPORT) -cdrom
+endif
 
 .PHONY: first distclean clean iso run all
 
@@ -47,35 +74,27 @@ first: iso
 
 all: run
 
-$(BUILDDIR)/%_c.o: $(SRCDIR)/%.$(SRCTEXT)
-	@mkdir -p $(BUILDDIR)
-	@echo "Compiling c parts of $(EXECUTABLE)..."
-	@echo -e "\tCompiling $<..."; $(CC) $(CFLAGS) $@ $<
-
-$(BUILDDIR)/%_asm.o: $(SRCDIR)/%.$(ASMTEXT)
-	@mkdir -p $(BUILDDIR)
-	@echo "Compiling asm parts of $(EXECUTABLE)..."
-	@echo -e "\tCompiling $<..."; $(ASM) $(NFLAGS) $< -o $@
-
-$(TARGET): $(OBJECTS) $(ASM_OBJECTS)
-	@mkdir -p $(TARGETDIR)
-	@echo "Linking..."
-	@echo -e "\tLinking $(TARGET)"; $(LNK) $(LFLAGS) $(LNKDIR)/link.$(LNKTEXT) -o $@ $(OBJECTS) $(ASM_OBJECTS)
-
-distclean:
-	@echo "Cleaning objects..."
-	@rm -rf build
-
-clean:
-	@echo "Cleaning all..."
-	@rm -rf build bin
+run: $(ISO)
+	$(V)$(QEMU) $(QEMUOPTS) $<
 
 iso $(ISO): $(TARGET)
-	@mkdir -p iso/boot/grub
-	@cp bin/kernel iso/boot/
-	@cp $(WORKERSDIR)/grub.cfg iso/boot/grub/
-	grub-mkrescue -d /usr/lib/grub/i386-pc/ -o bin/kernel.iso iso
-	@rm -r iso
+	$(V)mkdir -p iso/boot/grub
+	$(V)cp bin/kernel iso/boot/
+	$(V)cp $(WORKERSDIR)/grub.cfg iso/boot/grub/
+	$(V)grub-mkrescue -d /usr/lib/grub/i386-pc/ -o bin/kernel.iso iso
+	$(V)rm -r iso
 
-run: $(ISO)
-	@qemu-system-x86_64 -cdrom $<
+distclean:
+	$(V)echo "Cleaning objects..."
+	$(V)rm -rf build
+
+clean:
+	$(V)echo "Cleaning all..."
+	$(V)rm -rf build bin
+
+include $(SRCDIR)/Makefrag
+
+$(TARGET): $(OBJECTS) $(ASM_OBJECTS)
+	$(V)mkdir -p $(TARGETDIR)
+	$(V)echo "Linking..."
+	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(LFLAGS) $(LNKDIR)/link.$(LNKTEXT) -o $@ $(OBJECTS) $(ASM_OBJECTS)

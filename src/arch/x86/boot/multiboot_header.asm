@@ -1,4 +1,8 @@
-; Multiboot header
+; Copyright (c) 2022. AnyKeyShik Rarity
+;
+; nikitav59@gmail.com
+;
+; https://t.me/AnyKeyShik
 
 section .multiboot_header
 header_start:
