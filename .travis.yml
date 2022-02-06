@@ -5,5 +5,9 @@ language: c
 
 sudo: false
 
+before_script:
+  - mkdir -p build/{boot,keyboard,screen}
+  - mkdir -p iso/boot/grub
+
 script:
   - make iso
