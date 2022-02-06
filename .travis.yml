@@ -1,5 +1,5 @@
 os: linux
-install: sudo apt-get install nasm xorriso
+install: sudo apt-get install nasm xorriso grub-pc-bin qemu-kvm qemu virt-manager virt-viewer libvirt-bin
 
 language: c
 
