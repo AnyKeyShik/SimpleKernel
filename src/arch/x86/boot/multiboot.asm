@@ -4,6 +4,8 @@
 ;
 ; https://t.me/AnyKeyShik
 
+global check_multiboot
+
 section .multiboot_header
 header_start:
     magic    dd 0xE85250D6                           
@@ -16,3 +18,13 @@ header_start:
     dw 0    ; flags
     dd 8    ; size
 header_end:
+
+section .text
+bits32
+
+check_multiboot:
+    cmp eax, 0x36d76289
+    je .multiboot_ret
+    xor eax, eax
+.multiboot_ret
+    ret

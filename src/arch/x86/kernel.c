@@ -10,7 +10,16 @@
 
 extern void load_gdt(void);
 
+extern int check_multiboot(void);
+
+extern void exit(void);
+
 void kmain(void) {
+
+    if (!check_multiboot()) {
+        exit();
+    }
+
     const char *str = "Kernel v0.1";
 
     clear_screen();
