@@ -30,19 +30,16 @@ endif
 
 -include conf/env.mk
 
-# Architecture defines
-arch ?= x86
-
 # CC
 CC := gcc
 ASM := nasm
 LNK := ld
 
 # Folders
-SRCDIR := src/arch/$(arch)
-INCLUDEDIR := include/arch/$(arch)
+SRCDIR := src/
+INCLUDEDIR := include/
 LNKDIR := lnk
-BOOTDIR := boot/arch/$(arch)
+BOOTDIR := boot/
 BUILDDIR := build
 TARGETDIR := bin
 
@@ -57,10 +54,6 @@ SRCTEXT := c
 ASMTEXT := asm
 LNKTEXT := ld
 
-# Flags
-CFLAGS := -fno-stack-protector -nostdinc -O0 -m32 -c -I $(INCLUDEDIR) -o
-NFLAGS := -felf
-LFLAGS := -m elf_i386 --nmagic -T
 QEMUOPTS := -serial mon:stdio -cdrom
 
 ifdef DEBUG
@@ -68,13 +61,9 @@ GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
 override QEMUOPTS = -serial mon:stdio -gdb tcp::$(GDBPORT) -cdrom
 endif
 
-.PHONY: first distclean clean iso run all
+.PHONY: all distclean clean iso
 
-first: iso
-
-all: run
-
-run: $(ISO)
+all: $(ISO)
 	$(V)$(QEMU) $(QEMUOPTS) $<
 
 iso $(ISO): $(TARGET)
@@ -86,15 +75,10 @@ iso $(ISO): $(TARGET)
 
 distclean:
 	$(V)echo "Cleaning objects..."
-	$(V)rm -rf build
+	$(V)rm -rf $(BUILDDIR)
 
 clean:
 	$(V)echo "Cleaning all..."
-	$(V)rm -rf build bin
+	$(V)rm -rf $(BUILDDIR) $(TARGETDIR)
 
-include $(SRCDIR)/Makefrag
-
-$(TARGET): $(OBJECTS) $(ASM_OBJECTS)
-	$(V)mkdir -p $(TARGETDIR)
-	$(V)echo "Linking..."
-	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(LFLAGS) $(LNKDIR)/link.$(LNKTEXT) -o $@ $(OBJECTS) $(ASM_OBJECTS)
+include $(SRCDIR)/arch/x86/Makefile

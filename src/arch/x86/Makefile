@@ -11,6 +11,18 @@
 # where the Makefile is located.
 #
 
+# Architecture defines
+arch ?= x86
+
+# Folders
+SRCDIR := $(SRCDIR)arch/$(arch)
+INCLUDEDIR := $(INCLUDEDIR)arch/$(arch)
+
+# Flags
+CFLAGS := -fno-stack-protector -nostdinc -O0 -m32 -c -I $(INCLUDEDIR) -o
+NFLAGS := -felf
+LFLAGS := -m elf_i386 --nmagic -T
+
 # Sources and objects lists
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCTEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCTEXT)=_c.o))
@@ -29,3 +41,8 @@ $(BUILDDIR)/%_asm.o: $(SRCDIR)/%.$(ASMTEXT)
 	$(V)mkdir -p $(BUILDDIR)
 	$(V)echo "Compiling asm parts of $(EXECUTABLE)..."
 	$(V)echo -e "\tCompiling $<..."; $(ASM) $(NFLAGS) $< -o $@
+
+$(TARGET): $(OBJECTS) $(ASM_OBJECTS)
+	$(V)mkdir -p $(TARGETDIR)
+	$(V)echo "Linking..."
+	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(LFLAGS) $(LNKDIR)/link.$(LNKTEXT) -o $@ $(OBJECTS) $(ASM_OBJECTS)
