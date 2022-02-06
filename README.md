@@ -28,6 +28,8 @@ At this moment system is working in 32-bit protected mode only
 | Interrupt handling                | **DONE**      |
 | Keyboard support                  | **DONE**      |
 | Boot in Long Mode                 | `TODO`        |
+| Interrupt handling (for LM)       | `TODO`        |
+| Keyboard support (for LM)         | `TODO`        |
 | Boot in EFI                       | `TODO`        |
 | Memory management                 | `TODO`        |
 | Filesystem                        | `TODO`        |
