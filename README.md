@@ -29,14 +29,14 @@ At this moment system is working in 32-bit protected mode only
 | Keyboard support                  | **DONE**      |
 | Boot in Long Mode                 | `TODO`        |
 | Boot in EFI                       | `TODO`        |
-| POSIX support                     | `TODO`        |
-| Simple analog `libc`              | `TODO`        |
 | Memory management                 | `TODO`        |
 | Filesystem                        | `TODO`        |
+| POSIX support                     | `TODO`        |
+| Simple analog `libc`              | `TODO`        |
+| Multiple processes and scheduling | `TODO`        |
 | Basic shell                       | `TODO`        |
 | Users                             | `TODO`        |
 | Simple text editor                | `TODO`        |
-| Multiple processes and scheduling | `TODO`        |
 | Networking                        | `TODO`        |
 
 ### Maybe in future:
