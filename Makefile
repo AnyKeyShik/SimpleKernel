@@ -42,7 +42,7 @@ LNK := ld
 SRCDIR := src/arch/$(arch)
 INCLUDEDIR := include/arch/$(arch)
 LNKDIR := lnk
-WORKERSDIR := workers/arch/$(arch)
+BOOTDIR := boot/arch/$(arch)
 BUILDDIR := build
 TARGETDIR := bin
 
@@ -80,7 +80,7 @@ run: $(ISO)
 iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub
 	$(V)cp bin/kernel iso/boot/
-	$(V)cp $(WORKERSDIR)/grub.cfg iso/boot/grub/
+	$(V)cp $(BOOTDIR)/grub.cfg iso/boot/grub/
 	$(V)grub-mkrescue -d /usr/lib/grub/i386-pc/ -o bin/kernel.iso iso
 	$(V)rm -r iso
 
