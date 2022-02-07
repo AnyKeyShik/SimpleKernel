@@ -39,7 +39,7 @@ LNK := ld
 SRCDIR := src/
 INCLUDEDIR := include/
 LNKDIR := lnk
-BOOTDIR := boot/
+CONFDIR := conf/
 BUILDDIR := build
 TARGETDIR := bin
 
@@ -69,7 +69,7 @@ all: $(ISO)
 iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub
 	$(V)cp bin/kernel iso/boot/
-	$(V)cp $(BOOTDIR)/grub.cfg iso/boot/grub/
+	$(V)cp $(CONFDIR)/grub.cfg iso/boot/grub/
 	$(V)grub-mkrescue -d /usr/lib/grub/i386-pc/ -o bin/kernel.iso iso
 	$(V)rm -r iso
 
