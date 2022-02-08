@@ -1,4 +1,4 @@
-# Simple kernel 
+# Simple kernel
 
 <a href="https://github.com/AnyKeyShik/SimpleKernel/blob/master/LICENSE">
 <img src ="https://img.shields.io/github/license/AnyKeyShik/SimpleKernel.svg" />
@@ -13,43 +13,35 @@
 [![Build Status](https://travis-ci.com/AnyKeyShik/SimpleKernel.svg?branch=master)](https://app.travis-ci.com/github/AnyKeyShik/SimpleKernel)
 
 This is my first attempt to write something great (again :D)
-I want to learn how does OS work and this is main reason why I've started this project.
-At this moment system is working in 32-bit protected mode only
-
-## When I started I adhered to the following principles:
-* I don't want to write my own bootloader
-* (maybe smth else)
-
+I want to learn how does OS work and this is main reason why I've started this project. At this moment system is working
+in 32-bit protected mode only
 
 ## Features
-| Module                            | Progress      |
-|-----------------------------------|---------------|
-| Boot in BIOS                      | **DONE**      |
-| Interrupt handling                | **DONE**      |
-| Keyboard support                  | **DONE**      |
-| Boot in Long Mode                 | `TODO`        |
-| Interrupt handling (for LM)       | `TODO`        |
-| Keyboard support (for LM)         | `TODO`        |
-| Boot in EFI                       | `TODO`        |
-| Memory management                 | `TODO`        |
-| Filesystem                        | `TODO`        |
-| POSIX support                     | `TODO`        |
-| Simple analog `libc`              | `TODO`        |
-| Multiple processes and scheduling | `TODO`        |
-| Basic shell                       | `TODO`        |
-| Users                             | `TODO`        |
-| Simple text editor                | `TODO`        |
-| Networking                        | `TODO`        |
 
-### Maybe in future:
-* Bash interpreter
-* GUI
+| Module                             | Progress      |
+|------------------------------------|---------------|
+| Boot                               | **DONE**      |
+| Interrupt handling                 | **DONE**      |
+| Keyboard support                   | `In progrss`  |
+| Switch to Long Mode                | `TODO`        |
+| Interrupt handling (for Lone Mode) | `TODO`        |
+| Keyboard support (for Long Mode)   | `TODO`        |
+| Memory management                  | `TODO`        |
+| Filesystem                         | `TODO`        |
+| POSIX support                      | `TODO`        |
+| Simple analog `libc`               | `TODO`        |
+| Multiple processes and scheduling  | `TODO`        |
+| Basic shell                        | `TODO`        |
+| Users                              | `TODO`        |
+| Simple bootloader                  | `TODO`        |
+| Networking                         | `TODO`        |
 
 ## Getting started
 
 #### Requirements
 
 To compile and run this project, you will need:
+
 * the NASM assembler
 * the GNU linker
 * the GNU make
@@ -60,6 +52,7 @@ To compile and run this project, you will need:
 #### Running the code
 
 Simply use the following commands in a terminal:
+
 ```
 git clone https://github.com/AnyKeyShik/SimpleKernel.git
 cd SimpleKernel
