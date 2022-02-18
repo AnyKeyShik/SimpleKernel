@@ -18,23 +18,22 @@ in 32-bit protected mode only
 
 ## Features
 
-| Module                             | Progress      |
-|------------------------------------|---------------|
-| Boot                               | **DONE**      |
-| Interrupt handling                 | **DONE**      |
-| Keyboard support                   | `In progrss`  |
-| Switch to Long Mode                | `TODO`        |
-| Interrupt handling (for Lone Mode) | `TODO`        |
-| Keyboard support (for Long Mode)   | `TODO`        |
-| Memory management                  | `TODO`        |
-| Filesystem                         | `TODO`        |
-| POSIX support                      | `TODO`        |
-| Simple analog `libc`               | `TODO`        |
-| Multiple processes and scheduling  | `TODO`        |
-| Basic shell                        | `TODO`        |
-| Users                              | `TODO`        |
-| Simple bootloader                  | `TODO`        |
-| Networking                         | `TODO`        |
+| Module                            | Progress     |
+|-----------------------------------|--------------|
+| Boot                              | **DONE**     |
+| Basic work with screen            | **DONE**     |
+| Keyboard support                  | `In progrss` |
+| Switch to Long Mode               | `TODO`       |
+| Plug-n-Play support               | `TODO`       |
+| Memory management                 | `TODO`       |
+| Filesystem                        | `TODO`       |
+| POSIX support                     | `TODO`       |
+| Simple analog `libc`              | `TODO`       |
+| Multiple processes and scheduling | `TODO`       |
+| Basic shell                       | `TODO`       |
+| Users                             | `TODO`       |
+| Simple bootloader                 | `TODO`       |
+| Networking                        | `TODO`       |
 
 ## Getting started
 
