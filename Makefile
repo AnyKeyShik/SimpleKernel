@@ -36,10 +36,8 @@ ASM := nasm
 LNK := ld
 
 # Folders
-SRCDIR := src/
-INCLUDEDIR := include/
-LNKDIR := lnk
-CONFDIR := conf/
+KERDIR := kernel
+BOOTDIR := boot
 BUILDDIR := build
 TARGETDIR := bin
 
@@ -69,7 +67,7 @@ all: $(ISO)
 iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub
 	$(V)cp bin/kernel iso/boot/
-	$(V)cp $(CONFDIR)/grub.cfg iso/boot/grub/
+	$(V)cp $(BOOTDIR)/grub.cfg iso/boot/grub/
 	$(V)grub-mkrescue -d /usr/lib/grub/i386-pc/ -o bin/kernel.iso iso
 	$(V)rm -r iso
 
@@ -81,4 +79,5 @@ clean:
 	$(V)echo "Cleaning all..."
 	$(V)rm -rf $(BUILDDIR) $(TARGETDIR)
 
-include $(SRCDIR)/arch/x86/Makefile
+arch ?= x86
+include $(KERDIR)/arch/x86/Makefile

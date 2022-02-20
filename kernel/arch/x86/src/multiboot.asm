@@ -20,11 +20,10 @@ header_start:
 header_end:
 
 section .text
-bits32
 
 check_multiboot:
     cmp eax, 0x36d76289
     je .multiboot_ret
     xor eax, eax
-.multiboot_ret
+.multiboot_ret:
     ret

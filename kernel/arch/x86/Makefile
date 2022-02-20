@@ -11,29 +11,27 @@
 # where the Makefile is located.
 #
 
-# Architecture defines
-arch ?= x86
-
 # Folders
-SRCDIR := $(SRCDIR)arch/$(arch)
-INCLUDEDIR := $(INCLUDEDIR)arch/$(arch)
+ARCHDIR := $(KERDIR)/arch/$(arch)
+SRCDIR := $(KERDIR)/arch/$(arch)/src
+INCLUDEDIR := $(KERDIR)/arch/$(arch)/include
 
 # Flags
-CFLAGS := -fno-stack-protector -nostdinc -O0 -m32 -c -I $(INCLUDEDIR) -o
+CFLAGS := -fno-stack-protector -Wno-builtin-declaration-mismatch -m32 -c -I $(INCLUDEDIR) -o
 NFLAGS := -felf
-LFLAGS := -m elf_i386 --nmagic -T
+LFLAGS := -m elf_i386 --nmagic -nostdlib  -T
 
 # Sources and objects lists
-SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCTEXT))
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCTEXT)=_c.o))
-ASM_SOURCES := $(shell find $(SRCDIR) -type f -name *.$(ASMTEXT))
+SOURCES := $(SRCDIR)/console.c \
+		$(SRCDIR)/kernel.c
+OBJECTS := $(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SOURCES:.$(SRCTEXT)=_c.o))
+
+ASM_SOURCES := $(SRCDIR)/multiboot.asm \
+		$(SRCDIR)/boot.asm
 ASM_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(ASM_SOURCES:.$(ASMTEXT)=_asm.o))
 
-# Sub dirs
-SUBDIRS := {boot,keyboard,screen}
-
 $(BUILDDIR)/%_c.o: $(SRCDIR)/%.$(SRCTEXT)
-	$(V)mkdir -p $(BUILDDIR)/$(SUBDIRS)
+	$(V)mkdir -p $(BUILDDIR)
 	$(V)echo "Compiling c parts of $(EXECUTABLE)..."
 	$(V)echo -e "\tCompiling $<..."; $(CC) $(CFLAGS) $@ $<
 
@@ -45,4 +43,4 @@ $(BUILDDIR)/%_asm.o: $(SRCDIR)/%.$(ASMTEXT)
 $(TARGET): $(OBJECTS) $(ASM_OBJECTS)
 	$(V)mkdir -p $(TARGETDIR)
 	$(V)echo "Linking..."
-	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(LFLAGS) $(LNKDIR)/link.$(LNKTEXT) -o $@ $(OBJECTS) $(ASM_OBJECTS)
+	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(LFLAGS) $(ARCHDIR)/kernel.$(LNKTEXT) -o $@ $(OBJECTS) $(ASM_OBJECTS)
