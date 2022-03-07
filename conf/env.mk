@@ -6,7 +6,7 @@
 #
 # For overview commands only, the line should read 'V = @'.
 # For overview and verbose commands, the line should read 'V ='.
-#V = @
+V = @
 
 # If the makefile cannot find your QEMU binary, uncomment the
 # following line and set it to the full path to QEMU.

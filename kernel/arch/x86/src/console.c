@@ -7,27 +7,26 @@
 #include <console.h>
 
 void
-print_string(const char *const string) {
+print_string(const unsigned char *const string) {
     for (unsigned int i = 0; string[i] != '\0'; i++) {
-        putchar(string[i]);
+        putchar(string[i], BLACK, GREEN);
     }
 }
 
 void
-print_error(const char *const string) {
+print_error(const unsigned char *const string) {
     for (unsigned int i = 0; string[i] != '\0'; i++) {
-        vidptr[current_loc++] = string[i];
-        vidptr[current_loc++] = RED_SYMBOL;
+        putchar(string[i], BLACK, RED);
     }
 }
 
 void
-putchar(const char symbol) {
+putchar(const unsigned char symbol, const unsigned char bg_color, const unsigned char fg_color) {
     switch (symbol) {
         case '\b':
             if (current_loc > 0) {
                 vidptr[--current_loc] = EMPTY_SYMBOL;
-                vidptr[--current_loc] = ' ';
+                vidptr[--current_loc] = EMPTY_SYMBOL;
             }
             break;
         case '\n':
@@ -38,20 +37,20 @@ putchar(const char symbol) {
             break;
         case '\t':
             for (unsigned char i = 0; i < 4; i++) {
-                vidptr[current_loc++] = ' ';
-                vidptr[current_loc++] = GREEN_SYMBOL;
+                vidptr[current_loc++] = EMPTY_SYMBOL;
+                vidptr[current_loc++] = EMPTY_SYMBOL;
             }
             break;
         default:
             vidptr[current_loc++] = symbol;
-            vidptr[current_loc++] = GREEN_SYMBOL;
+            vidptr[current_loc++] = bg_color << 4 | fg_color;
     }
 }
 
 void
 clear_screen(void) {
     for (unsigned int i = 0; i < SCREENSIZE; i++) {
-        vidptr[i++] = ' ';
+        vidptr[i++] = EMPTY_SYMBOL;
         vidptr[i] = EMPTY_SYMBOL;
     }
 }

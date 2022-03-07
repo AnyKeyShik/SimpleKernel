@@ -16,13 +16,13 @@ void kmain(void) {
         exit();
     }
 
-    const char *str = "Kernel v0.1";
+    const char *title = "Kernel v0.1\n\r\n\r";
+    const char *author = "AnyKeyShik Rarity\n\r";
 
     clear_screen();
 
-    print_string(str);
-    putchar('\n');
-    putchar('\n');
+    print_string(title);
+    print_error(author);
 
     while (1);
 }

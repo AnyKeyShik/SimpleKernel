@@ -17,7 +17,12 @@ SRCDIR := $(KERDIR)/arch/$(arch)/src
 INCLUDEDIR := $(KERDIR)/arch/$(arch)/include
 
 # Flags
-CFLAGS := -fno-stack-protector -Wno-builtin-declaration-mismatch -m32 -c -I $(INCLUDEDIR) -o
+ifeq ($(DEBUG),1)
+CFLAGS := -fno-stack-protector -fno-pie -Werror -Wno-builtin-declaration-mismatch -m32 -g -c -I $(INCLUDEDIR) -o
+else
+CFLAGS := -fno-stack-protector -fno-pie -Werror -Wno-builtin-declaration-mismatch -m32 -c -I $(INCLUDEDIR) -o
+endif
+
 NFLAGS := -felf
 LFLAGS := -m elf_i386 --nmagic -nostdlib  -T
 
