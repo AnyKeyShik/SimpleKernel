@@ -20,7 +20,7 @@ LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32
 else
 LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -c -I$(GLOBAL_INCLUDE) -o
 endif
-LIBC_LFLAGS := -g -shared -m32
+LIBC_LFLAGS := -m elf_i386 --nmagic -nostdlib -shared
 
 # Sources and objects lists
 LIBC_SOURCES := $(LIBC_SRCDIR)/string.c
@@ -34,4 +34,4 @@ $(BUILDDIR)/%_c.o: $(LIBC_SRCDIR)/%.$(SRCTEXT)
 $(LIBC_TARGET): $(LIBC_OBJECTS)
 	$(V)mkdir -p $(TARGETDIR)
 	$(V)echo "Linking..."
-	$(V)echo -e "\tLinking $(LIBC_TARGET)"; $(CC) $(LIBC_LFLAGS) -o $@ $(LIBC_OBJECTS)
+	$(V)echo -e "\tLinking $(LIBC_TARGET)"; $(LD) $(LIBC_LFLAGS) -o $@ $(LIBC_OBJECTS)
