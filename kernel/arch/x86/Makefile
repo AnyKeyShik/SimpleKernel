@@ -12,40 +12,39 @@
 #
 
 # Folders
-ARCHDIR := $(KERDIR)/arch/$(arch)
-SRCDIR := $(KERDIR)/arch/$(arch)/src
-INCLUDEDIR := $(KERDIR)/arch/$(arch)/include
+KER_ARCHDIR := $(KERDIR)/arch/$(arch)
+KER_SRCDIR := $(KERDIR)/arch/$(arch)/src
+KER_INCLUDE := $(KERDIR)/arch/$(arch)/include
 
 # Flags
 ifeq ($(DEBUG),1)
-CFLAGS := -fno-stack-protector -fno-pie -Werror -Wno-builtin-declaration-mismatch -m32 -g -c -I $(INCLUDEDIR) -o
+KER_CFLAGS := -fno-stack-protector -fno-pie -Werror -Wno-builtin-declaration-mismatch -m32 -g -c -I $(KER_INCLUDE) -I$(GLOBAL_INCLUDE) -o
 else
-CFLAGS := -fno-stack-protector -fno-pie -Werror -Wno-builtin-declaration-mismatch -m32 -c -I $(INCLUDEDIR) -o
+KER_CFLAGS := -fno-stack-protector -fno-pie -Werror -Wno-builtin-declaration-mismatch -m32 -c -I$(KER_INCLUDE) -I$(GLOBAL_INCLUDE) -o
 endif
-
-NFLAGS := -felf
-LFLAGS := -m elf_i386 --nmagic -nostdlib  -T
+KER_NFLAGS := -felf
+KER_LFLAGS := -m elf_i386 --nmagic -nostdlib  -T
 
 # Sources and objects lists
-SOURCES := $(SRCDIR)/console.c \
-		$(SRCDIR)/kernel.c
-OBJECTS := $(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SOURCES:.$(SRCTEXT)=_c.o))
+KER_SOURCES := $(KER_SRCDIR)/console.c \
+		$(KER_SRCDIR)/kernel.c
+KER_OBJECTS := $(patsubst $(KER_SRCDIR)/%, $(BUILDDIR)/%, $(KER_SOURCES:.$(SRCTEXT)=_c.o))
 
-ASM_SOURCES := $(SRCDIR)/multiboot.asm \
-		$(SRCDIR)/boot.asm
-ASM_OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(ASM_SOURCES:.$(ASMTEXT)=_asm.o))
+KER_ASM_SRC := $(KER_SRCDIR)/multiboot.asm \
+		$(KER_SRCDIR)/boot.asm
+KER_ASM_OBJ := $(patsubst $(KER_SRCDIR)/%,$(BUILDDIR)/%,$(KER_ASM_SRC:.$(ASMTEXT)=_asm.o))
 
-$(BUILDDIR)/%_c.o: $(SRCDIR)/%.$(SRCTEXT)
+$(BUILDDIR)/%_c.o: $(KER_SRCDIR)/%.$(SRCTEXT)
 	$(V)mkdir -p $(BUILDDIR)
 	$(V)echo "Compiling c parts of $(EXECUTABLE)..."
-	$(V)echo -e "\tCompiling $<..."; $(CC) $(CFLAGS) $@ $<
+	$(V)echo -e "\tCompiling $<..."; $(CC) $(KER_CFLAGS) $@ $<
 
-$(BUILDDIR)/%_asm.o: $(SRCDIR)/%.$(ASMTEXT)
+$(BUILDDIR)/%_asm.o: $(KER_SRCDIR)/%.$(ASMTEXT)
 	$(V)mkdir -p $(BUILDDIR)
 	$(V)echo "Compiling asm parts of $(EXECUTABLE)..."
-	$(V)echo -e "\tCompiling $<..."; $(ASM) $(NFLAGS) $< -o $@
+	$(V)echo -e "\tCompiling $<..."; $(ASM) $(KER_NFLAGS) $< -o $@
 
-$(TARGET): $(OBJECTS) $(ASM_OBJECTS)
+$(TARGET): $(KER_OBJECTS) $(KER_ASM_OBJ) $(LIBC_TARGET)
 	$(V)mkdir -p $(TARGETDIR)
 	$(V)echo "Linking..."
-	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(LFLAGS) $(ARCHDIR)/kernel.$(LNKTEXT) -o $@ $(OBJECTS) $(ASM_OBJECTS)
+	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(KER_LFLAGS) $(KER_ARCHDIR)/kernel.$(LNKTEXT) -o $@ $(KER_OBJECTS) $(KER_ASM_OBJ)

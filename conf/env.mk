@@ -1,4 +1,4 @@
-# env.mk - configuration variables for the JOS lab
+# env.mk - configuration variables for the Simple Kernel
 
 # '$(V)' controls whether the lab makefiles print verbose commands (the
 # actual shell commands run by Make), as well as the "overview" commands
@@ -14,4 +14,4 @@ V = @
 # QEMU=
 
 # For debug purposes
-DEBUG =
+DEBUG = 0

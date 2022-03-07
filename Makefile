@@ -37,15 +37,19 @@ LNK := ld
 
 # Folders
 KERDIR := kernel
+LIBDIR := lib
+GLOBAL_INCLUDE := include
 BOOTDIR := boot
 BUILDDIR := build
 TARGETDIR := bin
 
 # Targets
 EXECUTABLE := kernel
+LIBC := libc.so
 ISOIM := kernel.iso
 TARGET := $(TARGETDIR)/$(EXECUTABLE)
-ISO := $(TARGETDIR)/$(ISOIM)
+LIBC_TARGET := $(TARGETDIR)/$(LIBC)
+ISO := $(ISOIM)
 
 # Code lists
 SRCTEXT := c
@@ -66,9 +70,9 @@ all: $(ISO)
 
 iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub
-	$(V)cp bin/kernel iso/boot/
+	$(V)cp $(TARGET) iso/boot/
 	$(V)cp $(BOOTDIR)/grub.cfg iso/boot/grub/
-	$(V)grub-mkrescue -d /usr/lib/grub/i386-pc/ -o bin/kernel.iso iso
+	$(V)grub-mkrescue -d /usr/lib/grub/i386-pc/ -o $(ISO) iso
 	$(V)rm -r iso
 
 distclean:
@@ -77,7 +81,9 @@ distclean:
 
 clean:
 	$(V)echo "Cleaning all..."
-	$(V)rm -rf $(BUILDDIR) $(TARGETDIR)
+	$(V)rm -rf $(BUILDDIR) $(TARGETDIR) $(ISO)
+
+include $(LIBDIR)/Makefile
 
 arch ?= x86
-include $(KERDIR)/arch/x86/Makefile
+include $(KERDIR)/arch/$(arch)/Makefile
