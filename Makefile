@@ -56,17 +56,22 @@ SRCTEXT := c
 ASMTEXT := asm
 LNKTEXT := ld
 
-QEMUOPTS := -serial mon:stdio -cdrom
+QEMUOPTS := -serial mon:stdio -display curses -append "console=ttyS0 nokaslr" --enable-kvm -cpu host -m 512
 
 ifdef DEBUG
 GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
-override QEMUOPTS = -serial mon:stdio -gdb tcp::$(GDBPORT) -cdrom
+override QEMUOPTS += -gdb tcp::$(GDBPORT)
 endif
 
-.PHONY: all distclean clean iso
+.PHONY: first all run iso distclean clean
+
+first: all
+
+run: $(TARGET)
+	$(V)$(QEMU) $(QEMUOPTS) -kernel $(TARGET)
 
 all: $(ISO)
-	$(V)$(QEMU) $(QEMUOPTS) $<
+	$(V)$(QEMU) $(QEMUOPTS) -cdrom $<
 
 iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub

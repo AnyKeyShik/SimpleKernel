@@ -6,16 +6,9 @@
 
 #include <console.h>
 
-extern int check_multiboot(void);
-
 extern void exit(void);
 
 void kmain(void) {
-
-    if (!check_multiboot()) {
-        exit();
-    }
-
     const char *title = "Kernel v0.1\n\r\n\r";
     const char *author = "AnyKeyShik Rarity\n\r";
 
