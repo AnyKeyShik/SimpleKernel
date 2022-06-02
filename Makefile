@@ -58,9 +58,9 @@ LNKTEXT := ld
 
 QEMUOPTS := -serial mon:stdio -display curses -append "console=ttyS0 nokaslr" --enable-kvm -cpu host -m 512
 
-ifdef DEBUG
+ifeq ($(DEBUG),1)
 GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
-override QEMUOPTS += -gdb tcp::$(GDBPORT)
+override QEMUOPTS += -gdb tcp::$(GDBPORT) -S
 endif
 
 .PHONY: first all run iso distclean clean
@@ -68,6 +68,10 @@ endif
 first: all
 
 run: $(TARGET)
+ifeq ($(DEBUG),1)
+	$(V)echo "Your debug port is $(GDBPORT)"
+endif
+	
 	$(V)$(QEMU) $(QEMUOPTS) -kernel $(TARGET)
 
 all: $(ISO)
