@@ -39,6 +39,7 @@ LNK := ld
 KERDIR := kernel
 LIBDIR := lib
 INCLUDE := include
+DEFDIR := $(INCLUDE)/defs
 BOOTDIR := boot
 BUILDDIR := build
 TARGETDIR := bin

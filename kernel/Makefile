@@ -17,9 +17,9 @@ KER_INCLUDE := $(INCLUDE)/$(KERDIR)
 
 # Flags
 ifeq ($(DEBUG),1)
-KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -g -c -I$(KER_INCLUDE) -o
+KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -g -c -I$(KER_INCLUDE) -I$(DEFDIR) -o
 else
-KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -c -I$(KER_INCLUDE) -o
+KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -c -I$(KER_INCLUDE) -I$(DEFDIR) -o
 endif
 KER_NFLAGS := -felf
 KER_LFLAGS := -m elf_i386 --nmagic -nostdlib  -T

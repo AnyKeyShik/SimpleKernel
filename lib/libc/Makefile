@@ -13,12 +13,13 @@
 
 # Folders
 LIBC_SRCDIR := $(LIBDIR)/$(LIBC_DIR)
+LBIC_INCLUDE := $(INCLUDE)/$(LIBC_DIR)
 
 # Flags
 ifeq ($(DEBUG),1)
-LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -g -c -I$(GLOBAL_INCLUDE) -o
+LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -g -c -I$(LBIC_INCLUDE) -I$(DEFDIR) -o
 else
-LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -c -I$(GLOBAL_INCLUDE) -o
+LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -c -I$(LBIC_INCLUDE) -I$(DEFDIR) -o
 endif
 LIBC_LFLAGS := -m elf_i386 --nmagic -nostdlib -shared
 
