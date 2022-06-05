@@ -12,15 +12,14 @@
 #
 
 # Folders
-KER_ARCHDIR := $(KERDIR)/arch/$(arch)
-KER_SRCDIR := $(KERDIR)/arch/$(arch)/src
-KER_INCLUDE := $(KERDIR)/arch/$(arch)/include
+KER_SRCDIR := $(KERDIR)/src
+KER_INCLUDE := $(INCLUDE)/$(KERDIR)
 
 # Flags
 ifeq ($(DEBUG),1)
-KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -g -c -I$(KER_INCLUDE) -I$(GLOBAL_INCLUDE) -o
+KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -g -c -I$(KER_INCLUDE) -o
 else
-KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -c -I$(KER_INCLUDE) -I$(GLOBAL_INCLUDE) -o
+KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -c -I$(KER_INCLUDE) -o
 endif
 KER_NFLAGS := -felf
 KER_LFLAGS := -m elf_i386 --nmagic -nostdlib  -T
@@ -47,4 +46,4 @@ $(BUILDDIR)/%_asm.o: $(KER_SRCDIR)/%.$(ASMTEXT)
 $(TARGET): $(KER_OBJECTS) $(KER_ASM_OBJ) $(LIBC_TARGET)
 	$(V)mkdir -p $(TARGETDIR)
 	$(V)echo "Linking..."
-	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(KER_LFLAGS) $(KER_ARCHDIR)/kernel.$(LNKTEXT) -o $@ $(KER_OBJECTS) $(KER_ASM_OBJ)
+	$(V)echo -e "\tLinking $(TARGET)"; $(LNK) $(KER_LFLAGS) $(KERDIR)/kernel.$(LNKTEXT) -o $@ $(KER_OBJECTS) $(KER_ASM_OBJ)

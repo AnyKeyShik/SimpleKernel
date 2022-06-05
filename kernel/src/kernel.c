@@ -8,7 +8,7 @@
 
 extern void exit(void);
 
-void kmain(void) {
+void __attribute__((noreturn)) kmain(void) {
     const char *title = "Kernel v0.1\n\r\n\r";
     const char *author = "AnyKeyShik Rarity\n\r";
 

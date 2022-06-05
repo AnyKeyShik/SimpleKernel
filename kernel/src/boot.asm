@@ -14,6 +14,7 @@ global exit
 extern kmain
 
 section .text
+align 4
 start:
     cli         ; block interrupts
     mov esp, stack_bottom
@@ -23,6 +24,7 @@ exit:
     hlt
 
 section .bss
+align 4
 stack_top:
     resb 8192   ; 8KB for stack
 stack_bottom:

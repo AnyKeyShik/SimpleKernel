@@ -22,7 +22,7 @@ in 32-bit protected mode only
 |-----------------------------------|---------------|
 | Boot                              | **DONE**      |
 | Basic work with screen            | **DONE**      |
-| Simple analog `libc`              | `In progress` |
+| Simple analog `libc`              | **DONE**      |
 | System journal                    | `TODO`        |
 | Boot in x86_64                    | `TODO`        |
 | Dynamic memory                    | `TODO`        |

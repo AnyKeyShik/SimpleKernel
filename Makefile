@@ -38,7 +38,7 @@ LNK := ld
 # Folders
 KERDIR := kernel
 LIBDIR := lib
-GLOBAL_INCLUDE := include
+INCLUDE := include
 BOOTDIR := boot
 BUILDDIR := build
 TARGETDIR := bin
@@ -56,7 +56,7 @@ SRCTEXT := c
 ASMTEXT := asm
 LNKTEXT := ld
 
-QEMUOPTS := -serial mon:stdio -display curses -append "console=ttyS0 nokaslr" --enable-kvm -cpu host -m 512
+QEMUOPTS := -serial mon:stdio -display curses --enable-kvm -cpu host -m 512
 
 ifeq ($(DEBUG),1)
 GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
@@ -72,7 +72,7 @@ ifeq ($(DEBUG),1)
 	$(V)echo "Your debug port is $(GDBPORT)"
 endif
 	
-	$(V)$(QEMU) $(QEMUOPTS) -kernel $(TARGET)
+	$(V)$(QEMU) $(QEMUOPTS) -append "console=ttyS0 nokaslr" -kernel $(TARGET)
 
 all: $(ISO)
 	$(V)$(QEMU) $(QEMUOPTS) -cdrom $<
@@ -81,7 +81,7 @@ iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub
 	$(V)cp $(TARGET) iso/boot/
 	$(V)cp $(BOOTDIR)/grub.cfg iso/boot/grub/
-	$(V)grub-mkrescue -d /usr/lib/grub/i386-pc/ -o $(ISO) iso
+	$(V)grub-mkrescue -o $(ISO) iso
 	$(V)rm -r iso
 
 distclean:
@@ -94,5 +94,4 @@ clean:
 
 include $(LIBDIR)/Makefile
 
-arch ?= x86
-include $(KERDIR)/arch/$(arch)/Makefile
+include $(KERDIR)/Makefile
