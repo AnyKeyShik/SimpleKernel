@@ -22,7 +22,6 @@ in 32-bit protected mode only
 |-----------------------------------|---------------|
 | Boot                              | **DONE**      |
 | Basic work with screen            | **DONE**      |
-| Simple analog `libc`              | **DONE**      |
 | System journal                    | `TODO`        |
 | Boot in x86_64                    | `TODO`        |
 | Dynamic memory                    | `TODO`        |
@@ -32,6 +31,7 @@ in 32-bit protected mode only
 | Filesystem                        | `TODO`        |
 | Multiple processes and scheduling | `TODO`        |
 | Basic shell                       | `TODO`        |
+| Simple analog `libc`              | `TODO`        |
 | POSIX support                     | `TODO`        |
 | Users                             | `TODO`        |
 | Simple bootloader                 | `TODO`        |
