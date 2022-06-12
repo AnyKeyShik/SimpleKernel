@@ -1,4 +1,4 @@
-5# Simple kernel
+# Simple kernel
 
 <a href="https://github.com/AnyKeyShik/SimpleKernel/blob/master/LICENSE">
 <img src ="https://img.shields.io/github/license/AnyKeyShik/SimpleKernel.svg" />
