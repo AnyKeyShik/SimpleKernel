@@ -6,17 +6,18 @@
 
 global check_multiboot
 
-MODULEALIGN equ 1<<0
-MEMINFO equ 1<<1
-FLAGS equ MODULEALIGN | MEMINFO
-MAGIC equ 0x1BADB002
-CHECKSUM equ -(MAGIC + FLAGS)
-
 bits 32
+
+section .data
+    MODULEALIGN equ 1<<0
+    MEMINFO equ 1<<1
+    
+    FLAGS equ MODULEALIGN | MEMINFO
+    MAGIC equ 0x1BADB002
+    CHECKSUM equ -(MAGIC + FLAGS)
 
 section .multiboot_header
 align 4
-
 header_start:
     dd MAGIC
     dd FLAGS
