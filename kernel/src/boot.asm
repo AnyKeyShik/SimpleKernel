@@ -16,12 +16,13 @@ extern kmain
 section .text
 align 4
 start:
-    cli         ; block interrupts
     mov esp, stack_bottom
+    
+    call asm_lock
     call kmain
 
 exit:
-    hlt
+    call asm_hlt
 
 section .bss
 align 4

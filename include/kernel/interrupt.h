@@ -7,9 +7,6 @@
 #ifndef INTERRUPT_H
 #define INTERRUPT_H
 
-#include <stdint.h>
-#include <stdbool.h>
-
 extern void asm_lock();
 extern void asm_unlock();
 extern void asm_hlt();
