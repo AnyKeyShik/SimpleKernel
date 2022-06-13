@@ -7,6 +7,8 @@
 #ifndef SIMPLEKERNEL_CONSOLE_H
 #define SIMPLEKERNEL_CONSOLE_H
 
+#include <stdint.h>
+
 enum screen_prop {
     LINES = 25,
     COLUMNS_IN_LINE = 80,

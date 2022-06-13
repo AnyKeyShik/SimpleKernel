@@ -30,7 +30,9 @@ KER_SOURCES := $(KER_SRCDIR)/console.c \
 KER_OBJECTS := $(patsubst $(KER_SRCDIR)/%, $(BUILDDIR)/%, $(KER_SOURCES:.$(SRCTEXT)=_c.o))
 
 KER_ASM_SRC := $(KER_SRCDIR)/multiboot.asm \
-		$(KER_SRCDIR)/boot.asm
+		$(KER_SRCDIR)/boot.asm \
+		$(KER_SRCDIR)/interrupt.asm \
+		$(KER_SRCDIR)/ports.asm
 KER_ASM_OBJ := $(patsubst $(KER_SRCDIR)/%,$(BUILDDIR)/%,$(KER_ASM_SRC:.$(ASMTEXT)=_asm.o))
 
 $(BUILDDIR)/%_c.o: $(KER_SRCDIR)/%.$(SRCTEXT)
