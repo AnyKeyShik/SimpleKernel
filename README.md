@@ -43,7 +43,7 @@ I want to learn how does OS work and this is main reason why I've started this p
 - [ ] Users
 ### Version 0.9:
 - [ ] Simple bootloader
-### Version 0.9:
+### Version 1.0:
 - [ ] Network
 
 ## Getting started
