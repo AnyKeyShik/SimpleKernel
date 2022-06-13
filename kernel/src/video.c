@@ -12,6 +12,7 @@ video_init() {
     video_disable_cursor();
 }
 
+// TODO: FIX IT
 void
 video_disable_cursor() {
     asm_write_port(0x3D4, 0x0A);
