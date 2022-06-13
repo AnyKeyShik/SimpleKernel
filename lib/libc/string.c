@@ -6,8 +6,8 @@
 
 #include <string.h>
 
-extern size_t strlen(const char *s) {
-    const char *original = s;
+extern size_t strlen(const u8 *s) {
+    const u8 *original = s;
 
     while (*s != '\0')
         s++;
@@ -15,8 +15,8 @@ extern size_t strlen(const char *s) {
     return s - original;
 }
 
-extern char *strcpy(char *__restrict __dest, const char *__restrict __src) {
-    char *original = __dest;
+extern u8 *strcpy(u8 *__restrict __dest, const u8 *__restrict __src) {
+    u8 *original = __dest;
 
     while (*__src != '\0')
         *__dest++ = *__src++;
@@ -47,7 +47,7 @@ extern void *memset(void *__s, u8 __c, size_t __n) {
     return buf_dst;
 }
 
-extern int strcmp(const char *__s1, const char *__s2) {
+extern int strcmp(const u8 *__s1, const u8 *__s2) {
     while (1) {
         if (*__s1 != *__s2)
             return (*__s1 - *__s2);
@@ -58,8 +58,8 @@ extern int strcmp(const char *__s1, const char *__s2) {
     }
 }
 
-extern char *strcat(char *__restrict __dest, const char *__restrict __src) {
-    char *original = __dest;
+extern u8 *strcat(u8 *__restrict __dest, const u8 *__restrict __src) {
+    u8 *original = __dest;
 
     while (*__dest != '\0')
         __dest++;
@@ -69,4 +69,3 @@ extern char *strcat(char *__restrict __dest, const char *__restrict __src) {
 
     return original;
 }
-

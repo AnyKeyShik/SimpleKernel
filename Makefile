@@ -34,12 +34,12 @@ endif
 CC := gcc
 ASM := nasm
 LNK := ld
+AR := ar
 
 # Folders
 KERDIR := kernel
 LIBDIR := lib
 INCLUDE := include
-DEFDIR := $(INCLUDE)/defs
 BOOTDIR := boot
 BUILDDIR := build
 TARGETDIR := bin
@@ -47,17 +47,15 @@ TARGETDIR := bin
 # Targets
 EXECUTABLE := kernel
 LIBC := libc.so
+LIBK := libk.a
 ISOIM := kernel.iso
+
 TARGET := $(TARGETDIR)/$(EXECUTABLE)
 LIBC_TARGET := $(TARGETDIR)/$(LIBC)
+LIBK_TARGET := $(BUILDDIR)/$(LIBK)
 ISO := $(ISOIM)
 
-# Code lists
-SRCTEXT := c
-ASMTEXT := asm
-LNKTEXT := ld
-
-QEMUOPTS := -accel tcg,thread=single -serial mon:stdio -display curses --enable-kvm -cpu qemu32 -m 512 -no-reboot -vga std
+QEMUOPTS := -serial mon:stdio -display curses --enable-kvm -cpu qemu32 -m 512 -no-reboot -vga std
 
 ifeq ($(DEBUG),1)
 GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
@@ -75,7 +73,7 @@ endif
 	
 	$(V)$(QEMU) $(QEMUOPTS) -append "console=ttyS0 nokaslr" -kernel $(TARGET)
 
-all: $(ISO)
+all: $(ISO) $(LIBC_TARGET)
 	$(V)$(QEMU) $(QEMUOPTS) -drive format=raw,media=cdrom,file=$<
 
 iso $(ISO): $(TARGET)

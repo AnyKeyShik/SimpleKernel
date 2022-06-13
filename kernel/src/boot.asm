@@ -12,6 +12,8 @@ global start
 global exit
 
 extern kmain
+extern asm_lock
+extern asm_hlt
 
 section .text
 align 4

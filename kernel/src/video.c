@@ -4,7 +4,9 @@
 //
 // https://t.me/AnyKeyShik
 
-#include <console.h>
+#include <video.h>
+#include <string.h>
+#include <ports.h>
 
 void
 video_init() {

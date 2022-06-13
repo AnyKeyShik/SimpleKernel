@@ -41,7 +41,7 @@ enum consts {
 };
 
 static u8 *const video_mem = (void*) 0xb8000;
-static u8 const video_mem_buff[SCREENSIZE];
+static u8 video_mem_buff[SCREENSIZE];
 
 extern void video_init(void);
 extern void video_disable_cursor(void);
