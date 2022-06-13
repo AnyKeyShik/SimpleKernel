@@ -20,11 +20,17 @@ align 4
 start:
     mov esp, stack_bottom
     
+    push ebp
+    mov ebp, esp
+
     call asm_lock
     call kmain
 
 exit:
     call asm_hlt
+
+    mov esp, ebp
+    pop ebp
 
 section .bss
 align 4
