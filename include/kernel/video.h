@@ -7,6 +7,8 @@
 #ifndef SIMPLEKERNEL_CONSOLE_H
 #define SIMPLEKERNEL_CONSOLE_H
 
+#include <stdint.h>
+
 enum screen_prop {
     LINES = 25,
     COLUMNS_IN_LINE = 80,
@@ -38,15 +40,13 @@ enum consts {
     EMPTY_SYMBOL = 0x0,
 };
 
-static unsigned int current_loc = 0;
-static unsigned char *const vidptr = (char *) 0xb8000;
+static u8 *const video_mem = (void*) 0xb8000;
+static u8 const video_mem_buff[SCREENSIZE];
 
-extern void print_string(const unsigned char *const string);
-
-extern void print_error(const unsigned char *const string);
-
-extern void putchar(const unsigned char symbol, const unsigned char bg_color, const unsigned char fg_color);
-
-extern void clear_screen(void);
+extern void video_init(void);
+extern void video_disable_cursor(void);
+extern void* video_scroll(const u8* pos);
+extern u8* video_clear(void);
+extern void video_flush(void);
 
 #endif //SIMPLEKERNEL_CONSOLE_H
