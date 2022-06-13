@@ -15,35 +15,36 @@
 This is my first attempt to write something great (again :D)
 I want to learn how does OS work and this is main reason why I've started this project. At this moment system is targeted for Intel i80386 (Real mode).
 
-## Features
+## Versioning
 
-| Module                            | Progress      |
-|-----------------------------------|---------------|
-| Boot                              | **DONE**      |
-| Basic work with screen            | **DONE**      |
-|-----------------------------------|---------------|
-| System journal                    | `TODO`        |
-| Dynamic memory                    | `TODO`        |
-|-----------------------------------|---------------|
-| Switch to Protected Mode          | `TODO`        |
-| Memory management                 | `TODO`        |
-|-----------------------------------|---------------|
-| Boot in Lond Mode                 | `TODO`        |
-| Memory management                 | `TODO`        |
-|-----------------------------------|---------------|
-| Plug-n-Play support               | `TODO`        |
-| Filesystem                        | `TODO`        |
-|-----------------------------------|---------------|
-| Simple analog `libc`              | `TODO`        |
-| POSIX support                     | `TODO`        |
-|-----------------------------------|---------------|
-| Multiple processes and scheduling | `TODO`        |
-| Basic shell                       | `TODO`        |
-|-----------------------------------|---------------|
-| Users                             | `TODO`        |
-| Simple bootloader                 | `TODO`        |
-|-----------------------------------|---------------|
-| Network                           | `TODO`        |
+### Version 0.1:
+- [x] Boot
+- [x] Basic work with screen
+### Version 0.2:
+- [ ] System journal
+- [ ] Dynamic memory
+### Version 0.3:
+- [ ] Switch to Protected Mode
+- [ ] Memory management
+### Version 0.4:
+- [ ] Switch to Long Mode
+- [ ] Memory management
+### Version 0.5:
+- [ ] Plug-n-Play support
+- [ ] Filesystem
+### Version 0.6:
+- [ ] Simple analog `libc`
+- [ ] POSIX support 
+### Version 0.7:
+- [ ] Multiple processes and scheduling
+- [ ] POSIX support 
+### Version 0.8:
+- [ ] Basic shell
+- [ ] Users
+### Version 0.9:
+- [ ] Simple bootloader
+### Version 0.9:
+- [ ] Network
 
 ## Getting started
 
