@@ -13,8 +13,7 @@
 [![Build Status](https://travis-ci.com/AnyKeyShik/SimpleKernel.svg?branch=master)](https://app.travis-ci.com/github/AnyKeyShik/SimpleKernel)
 
 This is my first attempt to write something great (again :D)
-I want to learn how does OS work and this is main reason why I've started this project. At this moment system is working
-in 32-bit protected mode only
+I want to learn how does OS work and this is main reason why I've started this project. At this moment system is targeted for Intel i80386 (Real mode).
 
 ## Features
 
@@ -22,20 +21,29 @@ in 32-bit protected mode only
 |-----------------------------------|---------------|
 | Boot                              | **DONE**      |
 | Basic work with screen            | **DONE**      |
+|-----------------------------------|---------------|
 | System journal                    | `TODO`        |
-| Boot in x86_64                    | `TODO`        |
 | Dynamic memory                    | `TODO`        |
+|-----------------------------------|---------------|
 | Switch to Protected Mode          | `TODO`        |
 | Memory management                 | `TODO`        |
+|-----------------------------------|---------------|
+| Boot in Lond Mode                 | `TODO`        |
+| Memory management                 | `TODO`        |
+|-----------------------------------|---------------|
 | Plug-n-Play support               | `TODO`        |
 | Filesystem                        | `TODO`        |
-| Multiple processes and scheduling | `TODO`        |
-| Basic shell                       | `TODO`        |
+|-----------------------------------|---------------|
 | Simple analog `libc`              | `TODO`        |
 | POSIX support                     | `TODO`        |
+|-----------------------------------|---------------|
+| Multiple processes and scheduling | `TODO`        |
+| Basic shell                       | `TODO`        |
+|-----------------------------------|---------------|
 | Users                             | `TODO`        |
 | Simple bootloader                 | `TODO`        |
-| Networking                        | `TODO`        |
+|-----------------------------------|---------------|
+| Network                           | `TODO`        |
 
 ## Getting started
 
