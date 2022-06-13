@@ -57,11 +57,11 @@ SRCTEXT := c
 ASMTEXT := asm
 LNKTEXT := ld
 
-QEMUOPTS := -serial mon:stdio -display curses --enable-kvm -cpu host -m 512
+QEMUOPTS := -accel tcg,thread=single -serial mon:stdio -display curses --enable-kvm -cpu qemu32 -m 512 -no-reboot -vga std
 
 ifeq ($(DEBUG),1)
 GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
-override QEMUOPTS += -gdb tcp::$(GDBPORT) -S
+override QEMUOPTS += -d -gdb tcp::$(GDBPORT) -S
 endif
 
 .PHONY: first all run iso distclean clean
@@ -76,7 +76,7 @@ endif
 	$(V)$(QEMU) $(QEMUOPTS) -append "console=ttyS0 nokaslr" -kernel $(TARGET)
 
 all: $(ISO)
-	$(V)$(QEMU) $(QEMUOPTS) -cdrom $<
+	$(V)$(QEMU) $(QEMUOPTS) -drive format=raw,media=cdrom,file=$<
 
 iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub
