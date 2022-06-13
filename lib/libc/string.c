@@ -69,4 +69,3 @@ extern char *strcat(char *__restrict __dest, const char *__restrict __src) {
 
     return original;
 }
-

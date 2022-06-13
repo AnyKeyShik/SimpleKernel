@@ -34,12 +34,12 @@ endif
 CC := gcc
 ASM := nasm
 LNK := ld
+AR := ar
 
 # Folders
 KERDIR := kernel
 LIBDIR := lib
 INCLUDE := include
-DEFDIR := $(INCLUDE)/defs
 BOOTDIR := boot
 BUILDDIR := build
 TARGETDIR := bin
@@ -47,15 +47,13 @@ TARGETDIR := bin
 # Targets
 EXECUTABLE := kernel
 LIBC := libc.so
+LIBK := libk.a
 ISOIM := kernel.iso
+
 TARGET := $(TARGETDIR)/$(EXECUTABLE)
 LIBC_TARGET := $(TARGETDIR)/$(LIBC)
+LIBK_TARGET := $(BUILDDIR)/$(LIBK)
 ISO := $(ISOIM)
-
-# Code lists
-SRCTEXT := c
-ASMTEXT := asm
-LNKTEXT := ld
 
 QEMUOPTS := -serial mon:stdio -display curses --enable-kvm -cpu host -m 512
 
@@ -75,7 +73,7 @@ endif
 	
 	$(V)$(QEMU) $(QEMUOPTS) -append "console=ttyS0 nokaslr" -kernel $(TARGET)
 
-all: $(ISO)
+all: $(ISO) $(LIBC_TARGET)
 	$(V)$(QEMU) $(QEMUOPTS) -cdrom $<
 
 iso $(ISO): $(TARGET)

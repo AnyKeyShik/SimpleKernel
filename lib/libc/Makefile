@@ -12,27 +12,44 @@
 #
 
 # Folders
-LIBC_SRCDIR := $(LIBDIR)/$(LIBC_DIR)
-LBIC_INCLUDE := $(INCLUDE)/$(LIBC_DIR)
+LIB_SRCDIR := $(LIBDIR)/$(LIBC_DIR)
+LIB_INCLUDE := $(INCLUDE)/$(LIBC_DIR)
 
-# Flags
+LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -c -I$(LIB_INCLUDE)
+LIBK_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -c -I$(LIB_INCLUDE) -DLIBK
 ifeq ($(DEBUG),1)
-LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -g -c -I$(LBIC_INCLUDE) -I$(DEFDIR) -o
-else
-LIBC_CFLAGS := -fno-stack-protector -fPIC -Wno-builtin-declaration-mismatch -m32 -c -I$(LBIC_INCLUDE) -I$(DEFDIR) -o
+LIBC_CFLAGS += -g
+LIBK_CFLAGS += -g
 endif
+
+# Flags for libc
 LIBC_LFLAGS := -m elf_i386 --nmagic -nostdlib -shared
 
+#Flags for libk
+LIBK_LFLAGS := rcs
+
+LIBC_OBJDIR := $(BUILDDIR)/libc
+LIBK_OBJDIR := $(BUILDDIR)/libk
+
 # Sources and objects lists
-LIBC_SOURCES := $(LIBC_SRCDIR)/string.c
-LIBC_OBJECTS := $(patsubst $(LIBC_SRCDIR)/%, $(BUILDDIR)/%, $(LIBC_SOURCES:.$(SRCTEXT)=_c.o))
+LIB_SRC := $(LIB_SRCDIR)/string.c
+LIBC_OBJ := $(patsubst $(LIB_SRCDIR)/%, $(LIBC_OBJDIR)/%, $(LIB_SRC:.c=_c.o))
+LIBK_OBJ := $(patsubst $(LIB_SRCDIR)/%, $(LIBK_OBJDIR)/%, $(LIB_SRC:.c=_c.o))
 
-$(BUILDDIR)/%_c.o: $(LIBC_SRCDIR)/%.$(SRCTEXT)
-	$(V)mkdir -p $(BUILDDIR)
-	$(V)echo "Compiling c parts of $(LIBC_TARGET)..."
-	$(V)echo -e "\tCompiling $<..."; $(CC) $(LIBC_CFLAGS) $@ $<
+$(LIBC_OBJDIR)/%_c.o: $(LIB_SRCDIR)/%.c
+	$(V)mkdir -p $(LIBC_OBJDIR)
+	$(V)echo "Compiling parts of $(LIBC_TARGET)..."
+	$(V)echo -e "\tCompiling $<..."; $(CC) $(LIBC_CFLAGS) -o $@ $<
 
-$(LIBC_TARGET): $(LIBC_OBJECTS)
+$(LIBK_OBJDIR)/%_c.o: $(LIB_SRCDIR)/%.c
+	$(V)mkdir -p $(LIBK_OBJDIR)
+	$(V)echo "Compiling parts of $(LIBK_TARGET)..."
+	$(V)echo -e "\tCompiling $<..."; $(CC) $(LIBK_CFLAGS) -o $@ $<
+
+$(LIBC_TARGET): $(LIBC_OBJ)
 	$(V)mkdir -p $(TARGETDIR)
-	$(V)echo "Linking..."
-	$(V)echo -e "\tLinking $(LIBC_TARGET)"; $(LD) $(LIBC_LFLAGS) -o $@ $(LIBC_OBJECTS)
+	$(V)echo -e "\tLinking $(LIBC_TARGET)"; $(LD) $(LIBC_LFLAGS) -o $@ $(LIBC_OBJ)
+
+$(LIBK_TARGET): $(LIBK_OBJ)
+	$(V)mkdir -p $(BUILDDIR)
+	$(V)echo "Making $(LIBK_TARGET)..."; $(AR) $(LIBK_LFLAGS) $@ $(LIBK_OBJ)
