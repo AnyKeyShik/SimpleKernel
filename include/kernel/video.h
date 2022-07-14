@@ -9,7 +9,8 @@
 
 #include <stdint.h>
 
-enum screen_prop {
+enum screen_prop
+{
     LINES = 25,
     COLUMNS_IN_LINE = 80,
     BYTES_FOR_EACH_ELEMENT = 2,
@@ -17,7 +18,8 @@ enum screen_prop {
     SCREENSIZE = LINE_SIZE * LINES
 };
 
-enum text_colors {
+enum text_colors
+{
     BLACK = 0x00,
     BLUE = 0x01,
     GREEN = 0x02,
@@ -36,17 +38,18 @@ enum text_colors {
     WHITE = 0x0f
 };
 
-enum consts {
+enum consts
+{
     EMPTY_SYMBOL = 0x0,
 };
 
-static u8 *const video_mem = (void*) 0xb8000;
+static u8 *const video_mem = (void *)0xb8000;
 static u8 video_mem_buff[SCREENSIZE];
 
 extern void video_init(void);
 extern void video_disable_cursor(void);
-extern void* video_scroll(const u8* pos);
-extern u8* video_clear(void);
+extern void *video_scroll(const u8 *pos);
+extern u8 *video_clear(void);
 extern void video_flush(void);
 
-#endif //SIMPLEKERNEL_CONSOLE_H
+#endif // SIMPLEKERNEL_CONSOLE_H
