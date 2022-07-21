@@ -20,7 +20,7 @@ void video_disable_cursor(void) {
 }
 
 void *video_scroll(const u8 *video_buffer, u8 *pos) {
-    char *ptr = (void *)video_buffer;
+    u8 *ptr = (void *)video_buffer;
 
     for (int i = 1; i < LINES; i++) {
         for (int j = 0; j < COLUMNS_IN_LINE; j++) {
@@ -35,4 +35,19 @@ void *video_scroll(const u8 *video_buffer, u8 *pos) {
     pos -= COLUMNS_IN_LINE;
 
     return pos;
+}
+
+u8 *video_clear(u8 const *video_buff) {
+    u8 *ptr = (void *)video_buff;
+
+    for (int i = 0; i < COLUMNS_IN_LINE; ++i) {
+        *ptr++ = EMPTY_SYMBOL;
+    }
+
+    return (void *)video_buff;
+}
+
+void video_flush(u8 const *video_buff) {
+    memext((void *)video_mem_buff, SCREENSIZE, video_buff, LIGHT_GRAY);
+    memcpy((void *)video_mem, video_mem_buff, SCREENSIZE_BYTES);
 }

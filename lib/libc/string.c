@@ -34,7 +34,7 @@ extern void *memcpy(void *__restrict __dest, const void *__restrict __src,
     u8 *buf_dst = __dest;
     const u8 *buf_src = __src;
 
-    for (int i = 0; i < __n; ++i) {
+    for (int i = 0; i < __n; i++) {
         *buf_dst++ = *buf_src++;
     }
 
@@ -44,11 +44,22 @@ extern void *memcpy(void *__restrict __dest, const void *__restrict __src,
 extern void *memset(void *__s, u8 __c, size_t __n) {
     u8 *buf_dst = __s;
 
-    for (int i = 0; i < __n; ++i) {
+    for (int i = 0; i < __n; i++) {
         *buf_dst++ = __c;
     }
 
     return buf_dst;
+}
+
+extern u8 *memext(void *__restrict __dest, u32 n, const void *__restrict __src,
+                  const u8 sym) {
+    u8 *buf_dst = __dest;
+    const u8 *buf_src = __src;
+
+    for (int i = 0; i < n; i++) {
+        *buf_dst++ = *buf_src++;
+        *buf_dst++ = sym;
+    }
 }
 
 extern int strcmp(const u8 *__s1, const u8 *__s2) {
