@@ -9,13 +9,20 @@
 
 #include <stdint.h>
 
+enum
+{
+    VIDEO_MEM_ADDRESS = 0xb8000
+};
+
 enum screen_prop
 {
     LINES = 25,
     COLUMNS_IN_LINE = 80,
+    SCREENSIZE = LINES * COLUMNS_IN_LINE,
+
     BYTES_FOR_EACH_ELEMENT = 2,
     LINE_SIZE = BYTES_FOR_EACH_ELEMENT * COLUMNS_IN_LINE,
-    SCREENSIZE = LINE_SIZE * LINES
+    SCREENSIZE_BYTES = LINE_SIZE * LINES
 };
 
 enum text_colors
@@ -43,13 +50,13 @@ enum consts
     EMPTY_SYMBOL = 0x0,
 };
 
-static u8 *const video_mem = (void *)0xb8000;
-static u8 video_mem_buff[SCREENSIZE];
+static u8 *const video_mem = (void *)VIDEO_MEM_ADDRESS;
+static u8 video_mem_buff[SCREENSIZE_BYTES];
 
 extern void video_init(void);
 extern void video_disable_cursor(void);
-extern void *video_scroll(const u8 *pos);
-extern u8 *video_clear(void);
-extern void video_flush(void);
+extern void *video_scroll(const u8 *video_buffer, u8 *pos);
+extern u8 *video_clear(const u8 *video_buffer);
+extern void video_flush(const u8 *video_buffer);
 
 #endif // SIMPLEKERNEL_CONSOLE_H

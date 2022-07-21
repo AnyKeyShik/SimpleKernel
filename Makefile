@@ -66,17 +66,17 @@ endif
 
 first: all
 
-run: $(TARGET)
+run: $(LIBK_TARGET) $(TARGET)
 ifeq ($(DEBUG),1)
 	$(V)echo "Your debug port is $(GDBPORT)"
 endif
 	
 	$(V)$(QEMU) $(QEMUOPTS) -append "console=ttyS0 nokaslr" -kernel $(TARGET)
 
-all: $(ISO) $(LIBC_TARGET)
+all: $(ISO)
 	$(V)$(QEMU) $(QEMUOPTS) -drive format=raw,media=cdrom,file=$<
 
-iso $(ISO): $(TARGET)
+iso $(ISO): $(LIBK_TARGET) $(TARGET)
 	$(V)mkdir -p iso/boot/grub
 	$(V)cp $(TARGET) iso/boot/
 	$(V)cp $(BOOTDIR)/grub.cfg iso/boot/grub/

@@ -17,9 +17,9 @@ KER_INCLUDE := $(INCLUDE)/$(KERDIR)
 
 # Flags
 ifeq ($(DEBUG),1)
-KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -g -c -I$(KER_INCLUDE) -I$(LIB_INCLUDE) -o
+KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -g -c -DLIBK -I$(KER_INCLUDE) -I$(LIB_INCLUDE) -l$(LIBK_TARGET)
 else
-KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -c -I$(KER_INCLUDE) -I$(LIB_INCLUDE) -o
+KER_CFLAGS := -fno-stack-protector -fno-pie -Wno-builtin-declaration-mismatch -m32 -c -DLIBK -I$(KER_INCLUDE) -I$(LIB_INCLUDE) -l$(LIBK_TARGET)
 endif
 KER_NFLAGS := -felf
 KER_LFLAGS := -m elf_i386 --nmagic -nostdlib  -T
@@ -38,7 +38,7 @@ KER_ASM_OBJ := $(patsubst $(KER_SRCDIR)/%,$(BUILDDIR)/%,$(KER_ASM_SRC:.asm=_asm.
 $(BUILDDIR)/%_c.o: $(KER_SRCDIR)/%.c
 	$(V)mkdir -p $(BUILDDIR)
 	$(V)echo "Compiling c parts of $(EXECUTABLE)..."
-	$(V)echo -e "\tCompiling $<..."; $(CC) $(KER_CFLAGS) $@ $<
+	$(V)echo -e "\tCompiling $<..."; $(CC) $(KER_CFLAGS) $< -o $@
 
 $(BUILDDIR)/%_asm.o: $(KER_SRCDIR)/%.asm
 	$(V)mkdir -p $(BUILDDIR)

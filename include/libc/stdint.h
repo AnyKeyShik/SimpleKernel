@@ -19,4 +19,4 @@ typedef unsigned int u_int;
 typedef unsigned long u_long;
 typedef unsigned long size_t;
 
-#endif //SIMPLEKERNEL_STDINT_H
+#endif  // SIMPLEKERNEL_STDINT_H

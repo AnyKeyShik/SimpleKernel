@@ -6,6 +6,10 @@
 
 #include <string.h>
 
+#ifndef LIBK
+#define u8 unsigned char
+#endif
+
 extern size_t strlen(const u8 *s) {
     const u8 *original = s;
 
