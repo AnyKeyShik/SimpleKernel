@@ -27,10 +27,8 @@ I want to learn how does OS work and this is main reason why I've started this p
 - [ ] Switch to Protected Mode
 - [ ] Memory management
 ### Version 0.4:
-- [ ] Switch to Long Mode
-- [ ] Memory management
-### Version 0.5:
 - [ ] Plug-n-Play support
+### Version 0.5:
 - [ ] Filesystem
 ### Version 0.6:
 - [ ] Simple analog `libc`
