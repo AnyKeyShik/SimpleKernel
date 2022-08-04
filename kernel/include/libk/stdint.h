@@ -7,16 +7,9 @@
 #ifndef SIMPLEKERNEL_STDINT_H
 #define SIMPLEKERNEL_STDINT_H
 
-#ifdef LIBK
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
-#endif
-
-typedef unsigned char u_char;
-typedef unsigned short u_short;
-typedef unsigned int u_int;
-typedef unsigned long u_long;
 typedef unsigned long size_t;
 
 #endif  // SIMPLEKERNEL_STDINT_H

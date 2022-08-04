@@ -4,9 +4,9 @@
 //
 // https://t.me/AnyKeyShik
 
-#include <ports.h>
-#include <string.h>
-#include <video.h>
+#include <io/ports.h>
+#include <io/video.h>
+#include <libk/string.h>
 
 void video_init(void) {
     memset(video_mem_buff, EMPTY_SYMBOL, SCREENSIZE);

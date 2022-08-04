@@ -4,13 +4,9 @@
 //
 // https://t.me/AnyKeyShik
 
-#include <string.h>
+#include <libk/string.h>
 
-#ifndef LIBK
-#define u8 unsigned char
-#endif
-
-extern size_t strlen(const u8 *s) {
+size_t strlen(const u8 *s) {
     const u8 *original = s;
 
     while (*s != '\0')
@@ -19,7 +15,7 @@ extern size_t strlen(const u8 *s) {
     return s - original;
 }
 
-extern u8 *strcpy(u8 *__restrict __dest, const u8 *__restrict __src) {
+u8 *strcpy(u8 *__restrict __dest, const u8 *__restrict __src) {
     u8 *original = __dest;
 
     while (*__src != '\0')
@@ -29,8 +25,8 @@ extern u8 *strcpy(u8 *__restrict __dest, const u8 *__restrict __src) {
     return original;
 }
 
-extern void *memcpy(void *__restrict __dest, const void *__restrict __src,
-                    size_t __n) {
+void *memcpy(void *__restrict __dest, const void *__restrict __src,
+             size_t __n) {
     u8 *buf_dst = __dest;
     const u8 *buf_src = __src;
 
@@ -41,7 +37,7 @@ extern void *memcpy(void *__restrict __dest, const void *__restrict __src,
     return buf_dst;
 }
 
-extern void *memset(void *__s, u8 __c, size_t __n) {
+void *memset(void *__s, u8 __c, size_t __n) {
     u8 *buf_dst = __s;
 
     for (int i = 0; i < __n; i++) {
@@ -51,8 +47,8 @@ extern void *memset(void *__s, u8 __c, size_t __n) {
     return buf_dst;
 }
 
-extern u8 *memext(void *__restrict __dest, u32 n, const void *__restrict __src,
-                  const u8 sym) {
+u8 *memext(void *__restrict __dest, u32 n, const void *__restrict __src,
+           const u8 sym) {
     u8 *buf_dst = __dest;
     const u8 *buf_src = __src;
 
@@ -62,7 +58,7 @@ extern u8 *memext(void *__restrict __dest, u32 n, const void *__restrict __src,
     }
 }
 
-extern int strcmp(const u8 *__s1, const u8 *__s2) {
+int strcmp(const u8 *__s1, const u8 *__s2) {
     while (1) {
         if (*__s1 != *__s2)
             return (*__s1 - *__s2);
@@ -73,7 +69,7 @@ extern int strcmp(const u8 *__s1, const u8 *__s2) {
     }
 }
 
-extern u8 *strcat(u8 *__restrict __dest, const u8 *__restrict __src) {
+u8 *strcat(u8 *__restrict __dest, const u8 *__restrict __src) {
     u8 *original = __dest;
 
     while (*__dest != '\0')

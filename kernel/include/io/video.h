@@ -7,7 +7,7 @@
 #ifndef SIMPLEKERNEL_CONSOLE_H
 #define SIMPLEKERNEL_CONSOLE_H
 
-#include <stdint.h>
+#include <libk/stdint.h>
 
 enum
 {

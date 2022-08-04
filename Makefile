@@ -38,21 +38,15 @@ AR := ar
 
 # Folders
 KERDIR := kernel
-LIBDIR := lib
-INCLUDE := include
 BOOTDIR := boot
 BUILDDIR := build
 TARGETDIR := bin
 
 # Targets
 EXECUTABLE := kernel
-LIBC := libc.so
-LIBK := libk.a
 ISOIM := kernel.iso
 
 TARGET := $(TARGETDIR)/$(EXECUTABLE)
-LIBC_TARGET := $(TARGETDIR)/$(LIBC)
-LIBK_TARGET := $(BUILDDIR)/$(LIBK)
 ISO := $(ISOIM)
 
 QEMUOPTS := -serial mon:stdio -display curses --enable-kvm -cpu qemu32 -m 512 -no-reboot -vga std
@@ -66,7 +60,7 @@ endif
 
 first: all
 
-run: $(LIBK_TARGET) $(TARGET)
+run: $(TARGET)
 ifeq ($(DEBUG),1)
 	$(V)echo "Your debug port is $(GDBPORT)"
 endif
@@ -76,7 +70,7 @@ endif
 all: $(ISO)
 	$(V)$(QEMU) $(QEMUOPTS) -drive format=raw,media=cdrom,file=$<
 
-iso $(ISO): $(LIBK_TARGET) $(TARGET)
+iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub
 	$(V)cp $(TARGET) iso/boot/
 	$(V)cp $(BOOTDIR)/grub.cfg iso/boot/grub/
@@ -91,6 +85,5 @@ clean:
 	$(V)echo "Cleaning all..."
 	$(V)rm -rf $(BUILDDIR) $(TARGETDIR) $(ISO)
 
-include $(LIBDIR)/Makefile
-
+arch := x86
 include $(KERDIR)/Makefile
