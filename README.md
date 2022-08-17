@@ -21,28 +21,30 @@ I want to learn how does OS work and this is main reason why I've started this p
 - [x] Boot
 - [x] Basic work with screen
 ### Version 0.2:
-- [ ] System journal
-- [ ] Dynamic memory
+- [x] System journal
 ### Version 0.3:
+- [ ] Dynamic memory
+### Version 0.4:
 - [ ] Switch to Protected Mode
 - [ ] Memory management
-### Version 0.4:
-- [ ] Plug-n-Play support
 ### Version 0.5:
-- [ ] Filesystem
+- [ ] Plug-n-Play support
 ### Version 0.6:
-- [ ] Simple analog `libc`
-- [ ] POSIX support 
+- [ ] Filesystem
 ### Version 0.7:
-- [ ] Multiple processes and scheduling
+- [ ] Simple analog `libc`
 - [ ] POSIX support 
 ### Version 0.8:
 - [ ] Basic shell
-- [ ] Users
+- [ ] POSIX support 
 ### Version 0.9:
-- [ ] Simple bootloader
+- [ ] Multiple processes and scheduling
+- [ ] POSIX support 
 ### Version 1.0:
+- [ ] Users
 - [ ] Network
+### Version 2.0:
+- [ ] Simple bootloader
 
 ## Getting started
 
