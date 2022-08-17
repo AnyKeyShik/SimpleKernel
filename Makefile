@@ -34,34 +34,26 @@ endif
 CC := gcc
 ASM := nasm
 LNK := ld
+AR := ar
 
 # Folders
 KERDIR := kernel
-LIBDIR := lib
-INCLUDE := include
-DEFDIR := $(INCLUDE)/defs
 BOOTDIR := boot
 BUILDDIR := build
 TARGETDIR := bin
 
 # Targets
 EXECUTABLE := kernel
-LIBC := libc.so
 ISOIM := kernel.iso
+
 TARGET := $(TARGETDIR)/$(EXECUTABLE)
-LIBC_TARGET := $(TARGETDIR)/$(LIBC)
 ISO := $(ISOIM)
 
-# Code lists
-SRCTEXT := c
-ASMTEXT := asm
-LNKTEXT := ld
-
-QEMUOPTS := -serial mon:stdio -display curses --enable-kvm -cpu host -m 512
+QEMUOPTS := -serial mon:stdio -cpu qemu32 -m 512 -no-reboot -no-shutdown -vga std
 
 ifeq ($(DEBUG),1)
 GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
-override QEMUOPTS += -gdb tcp::$(GDBPORT) -S
+override QEMUOPTS += -s -S
 endif
 
 .PHONY: first all run iso distclean clean
@@ -76,7 +68,7 @@ endif
 	$(V)$(QEMU) $(QEMUOPTS) -append "console=ttyS0 nokaslr" -kernel $(TARGET)
 
 all: $(ISO)
-	$(V)$(QEMU) $(QEMUOPTS) -cdrom $<
+	$(V)$(QEMU) $(QEMUOPTS) -drive format=raw,media=cdrom,file=$<
 
 iso $(ISO): $(TARGET)
 	$(V)mkdir -p iso/boot/grub
@@ -93,6 +85,5 @@ clean:
 	$(V)echo "Cleaning all..."
 	$(V)rm -rf $(BUILDDIR) $(TARGETDIR) $(ISO)
 
-include $(LIBDIR)/Makefile
-
+arch := x86
 include $(KERDIR)/Makefile

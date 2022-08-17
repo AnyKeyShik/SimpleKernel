@@ -7,8 +7,8 @@
 #ifndef INTERRUPT_H
 #define INTERRUPT_H
 
-extern void asm_lock();
-extern void asm_unlock();
-extern void asm_hlt();
+extern void asm_lock(void);
+extern void asm_unlock(void);
+extern void asm_hlt(void);
 
-#endif //INTERRUPT_H
+#endif  // INTERRUPT_H

@@ -7,13 +7,12 @@
 #ifndef PORTS_H
 #define PORTS_H
 
-
-#include <stdint.h>
+#include <libk/stdint.h>
 
 /*
  * Port operations
  */
-extern u_char asm_read_port(u_char port);
-extern void asm_write_port(u_int port, u_char data);
+extern u8 asm_read_port(u8 port);
+extern void asm_write_port(u32 port, u8 data);
 
-#endif //PORTS_H
+#endif  // PORTS_H
