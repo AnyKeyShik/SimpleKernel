@@ -10,7 +10,7 @@
 typedef enum {
     false = 0,
     true = 1
-} _Bool;
+} bool;
 
 #define	false	false
 #define	true	true

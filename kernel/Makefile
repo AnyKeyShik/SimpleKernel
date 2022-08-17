@@ -18,16 +18,19 @@ KER_INCLUDE := $(KERDIR)/include
 
 # Flags
 ifeq ($(DEBUG),1)
-KER_CFLAGS := -fno-stack-protector -fno-pie -nostdlib -Wno-builtin-declaration-mismatch -m32 -g -c -I$(KER_INCLUDE)
+KER_CFLAGS := -fno-stack-protector -fno-pie -nostdlib -Wno-builtin-declaration-mismatch -m32 -std=c99 -g -c -I$(KER_INCLUDE)
 else
-KER_CFLAGS := -fno-stack-protector -fno-pie -nostdlib -Wno-builtin-declaration-mismatch -m32 -c -I$(KER_INCLUDE)
+KER_CFLAGS := -fno-stack-protector -fno-pie -nostdlib -Wno-builtin-declaration-mismatch -m32 -std=c99 -c -I$(KER_INCLUDE)
 endif
 KER_NFLAGS := -felf
-KER_LFLAGS := -m elf_i386 --nmagic -nostdlib  -T
+KER_LFLAGS := -m elf_i386 --nmagic -nostdlib -z noexecstack  -T
 
 # Sources and objects lists
 KER_SOURCES := $(KER_SRCDIR)/io/video.c \
-		$(KER_SRCDIR)/libk/string.c
+		$(KER_SRCDIR)/libk/string.c \
+		$(KER_SRCDIR)/libk/stdio.c \
+		$(KER_SRCDIR)/libk/kpanic.c \
+		$(KER_SRCDIR)/libk/kassert.c
 KER_OBJECTS := $(patsubst $(KER_SRCDIR)/%, $(BUILDDIR)/%, $(KER_SOURCES:.c=_c.o))
 KER_OBJECTS += $(BUILDDIR)/kernel_c.o
 

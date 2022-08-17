@@ -9,7 +9,7 @@
 #include <libk/string.h>
 
 void video_init(void) {
-    memset(video_mem_buff, EMPTY_SYMBOL, SCREENSIZE);
+    memset(video_mem_buff, ' ', SCREENSIZE);
     video_disable_cursor();
 }
 
@@ -22,17 +22,17 @@ void video_disable_cursor(void) {
 void *video_scroll(const u8 *video_buffer, u8 *pos) {
     u8 *ptr = (void *)video_buffer;
 
-    for (int i = 1; i < LINES; i++) {
-        for (int j = 0; j < COLUMNS_IN_LINE; j++) {
-            ptr[(i - 1) * COLUMNS_IN_LINE + j] = ptr[i * COLUMNS_IN_LINE + j];
+    for (int i = 1; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+            ptr[(i - 1) * WIDTH + j] = ptr[i * WIDTH + j];
         }
     }
 
-    for (int j = 0; j < COLUMNS_IN_LINE; ++j) {
-        ptr[(COLUMNS_IN_LINE - 1) * COLUMNS_IN_LINE + j] = EMPTY_SYMBOL;
+    for (int j = 0; j < WIDTH; ++j) {
+        ptr[(WIDTH - 1) * WIDTH + j] = ' ';
     }
 
-    pos -= COLUMNS_IN_LINE;
+    pos -= WIDTH;
 
     return pos;
 }
@@ -40,14 +40,14 @@ void *video_scroll(const u8 *video_buffer, u8 *pos) {
 u8 *video_clear(u8 const *video_buff) {
     u8 *ptr = (void *)video_buff;
 
-    for (int i = 0; i < COLUMNS_IN_LINE; ++i) {
-        *ptr++ = EMPTY_SYMBOL;
+    for (int i = 0; i < WIDTH; ++i) {
+        *ptr++ = ' ';
     }
 
     return (void *)video_buff;
 }
 
 void video_flush(u8 const *video_buff) {
-    memext((void *)video_mem_buff, SCREENSIZE, video_buff, LIGHT_GRAY);
+    memext((void *)video_mem_buff, SCREENSIZE_BYTES, video_buff, LIGHT_GRAY);
     memcpy((void *)video_mem, video_mem_buff, SCREENSIZE_BYTES);
 }

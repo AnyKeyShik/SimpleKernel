@@ -49,11 +49,11 @@ ISOIM := kernel.iso
 TARGET := $(TARGETDIR)/$(EXECUTABLE)
 ISO := $(ISOIM)
 
-QEMUOPTS := -serial mon:stdio -display curses --enable-kvm -cpu qemu32 -m 512 -no-reboot -vga std
+QEMUOPTS := -serial mon:stdio -cpu qemu32 -m 512 -no-reboot -no-shutdown -vga std
 
 ifeq ($(DEBUG),1)
 GDBPORT	:= $(shell expr `id -u` % 5000 + 25000)
-override QEMUOPTS += -d -gdb tcp::$(GDBPORT) -S
+override QEMUOPTS += -s -S
 endif
 
 .PHONY: first all run iso distclean clean

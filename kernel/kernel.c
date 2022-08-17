@@ -4,19 +4,16 @@
 //
 // https://t.me/AnyKeyShik
 
-#include <io/video.h>
+#include <libk/stdio.h>
 
 extern void exit(void);
 
 void __attribute__((noreturn)) kmain(void) {
-    const u8 *title = "Kernel v0.1\n\r\n\r";
-    const u8 *author = "AnyKeyShik Rarity\n\r";
+    const u8 *title = "Kernel v0.1\n";
+    const u8 *author = "AnyKeyShik Rarity\n";
 
-    // clear_screen();
+    kprintf("\t\t\t\t%s", title);
+    kprintf("\t\t\t%s", author);
 
-    // print_string(title);
-    // print_error(author);
-
-    while (1)
-        ;
+    for (;;);
 }
